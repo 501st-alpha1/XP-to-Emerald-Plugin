@@ -7,6 +7,9 @@ commands:
     usage: "usage: /<command> [xp amount]"
     permissions: xptoemerald.convert
     permission-message: Requires permission xptoemerald.convert
+  showxp:
+    description: Show your current XP.
+    usage: "usage: /showxp"
 permissions:
   xptoemerald.*:
     description: Give access to all XPtoEmerald commands.
