@@ -31,7 +31,7 @@ public final class XPtoEmerald extends JavaPlugin {
         int expToUse = Integer.parseInt(args[0]);
         int emeralds = expToUse / SCALE;
         PlayerInventory inventory = player.getInventory();
-        int exp = (int) player.getExp();
+        int exp = (int) player.getTotalExperience();
         if (expToUse > exp) {
           sender.sendMessage("You don't have enough XP!");
           return true;
