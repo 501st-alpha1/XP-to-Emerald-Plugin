@@ -57,6 +57,18 @@ public final class XPtoEmerald extends JavaPlugin {
         return false;
       }
     }
+    if (cmd.getName().equalsIgnoreCase("showxp")) {
+      if (sender instanceof Player) {
+        Player player = (Player) sender;
+        sender.sendMessage("Your total experience is: "
+            + player.getTotalExperience());
+        return true;
+      }
+      else {
+        sender.sendMessage("This command may not be used from the console.");
+        return false;
+      }
+    }
     return false;
   }
 }
