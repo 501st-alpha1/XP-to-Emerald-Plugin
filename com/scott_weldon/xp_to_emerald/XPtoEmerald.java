@@ -37,7 +37,7 @@ public final class XPtoEmerald extends JavaPlugin {
           return true;
         }
         else {
-          player.setExp(exp - expToUse);
+          player.setTotalExperience(exp - expToUse);
           while (emeralds > 0) {
             ItemStack emeraldStack;
             if (emeralds > 64) {
