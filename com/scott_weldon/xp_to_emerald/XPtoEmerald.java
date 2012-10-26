@@ -28,9 +28,6 @@ public final class XPtoEmerald extends JavaPlugin {
       if (sender instanceof Player) {
         Player player = (Player) sender;
         PlayerInventory inventory = player.getInventory();
-        // Test
-        inventory.addItem(new ItemStack(Material.DIAMOND, 65));
-        // End test
         // Permissions stuff here?
         int expToUse = Integer.parseInt(args[0]);
         int emeralds = expToUse / SCALE;
@@ -42,14 +39,12 @@ public final class XPtoEmerald extends JavaPlugin {
           sender.sendMessage("You only have " + exp + " XP!");
           return true;
         }
+        sender.sendMessage("You previously had " + exp + " XP!");
         player.setTotalExperience(exp - expToUse);
-        while (emeralds > 0) {
-          ItemStack emeraldStack;
-          int currentStack = (emeralds > 64) ? 64 : emeralds;
-          emeralds -= 64;
-          emeraldStack = new ItemStack(Material.EMERALD, currentStack);
-          inventory.addItem(emeraldStack);
-        }
+        sender.sendMessage("You should have " + (exp - expToUse) + " XP.");
+        sender.sendMessage("You actually have " + player.getTotalExperience()
+            + " XP.");
+        inventory.addItem(new ItemStack(Material.EMERALD, emeralds));
 
         return true;
       }
