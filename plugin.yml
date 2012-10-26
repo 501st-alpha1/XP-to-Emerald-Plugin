@@ -4,7 +4,7 @@ version: 0.0.3
 commands:
   xptoemerald:
     description: Convert some XP to Emeralds.
-    usage: usage: /<command> [xp amount]
+    usage: "usage: /<command> [xp amount]"
     permissions: xptoemerald.convert
     permission-message: Requires permission xptoemerald.convert
 permissions:
