@@ -11,14 +11,14 @@ permissions:
   xptoemerald.*:
     description: Give access to all XPtoEmerald commands.
     children:
-      xptoemerald.convert
-      xptoemerald.admin
+      xptoemerald.convert: true
+      xptoemerald.admin: true
   xptoemerald.convert:
     description: Allow converting XP to Emeralds and back.
     default: true
   xptoemerald.admin:
     description: Allow converting of other players' resources.
     children:
-      xptoemerald.convert
+      xptoemerald.convert: true
     default: op
     
