@@ -31,19 +31,16 @@ public final class XPtoEmerald extends JavaPlugin {
         // Permissions stuff here?
         int expToUse = Integer.parseInt(args[0]);
         int emeralds = expToUse / SCALE;
-        if ((expToUse % SCALE) != 0) {
-          expToUse -= expToUse % SCALE;
-        }
-        int exp = (int) player.getTotalExperience();
+        expToUse -= expToUse % SCALE;
+        int exp = getTotalXP(player);
         if (expToUse > exp) {
           sender.sendMessage("You only have " + exp + " XP!");
           return true;
         }
         sender.sendMessage("You previously had " + exp + " XP!");
-        player.setTotalExperience(exp - expToUse);
+        setTotalXP(player, exp - expToUse);
         sender.sendMessage("You should have " + (exp - expToUse) + " XP.");
-        sender.sendMessage("You actually have " + player.getTotalExperience()
-            + " XP.");
+        sender.sendMessage("You actually have " + getTotalXP(player) + " XP.");
         inventory.addItem(new ItemStack(Material.EMERALD, emeralds));
 
         return true;
@@ -54,5 +51,64 @@ public final class XPtoEmerald extends JavaPlugin {
       }
     }
     return false;
+  }
+
+  public int getTotalXP(Player player) {
+    int level = player.getLevel();
+    int currentXP = (int) player.getExp();
+    int totalXP = 0;
+
+    if (level <= 15) {
+      totalXP = 17 * level;
+    }
+    else if (level <= 30) {
+      totalXP = (int) (1.5 * Math.pow(level, 2) - 29.5 * level + 360);
+    }
+    else { // Levels above 30
+      totalXP = (int) (3.5 * Math.pow(level, 2) - 151.5 * level + 2220);
+    }
+
+    totalXP += currentXP;
+
+    return totalXP;
+  }
+
+  public void setTotalXP(Player player, int xp) {
+    int level = 0;
+
+    while (level < 15) {
+      int xpToNext = 17;
+      if (xp > xpToNext) {
+        xp -= xpToNext;
+        level++;
+      }
+      else {
+        break;
+      }
+    }
+    while (level < 30) {
+      int xpToNext = 3 * level - 28;
+      if (xp > xpToNext) {
+        xp -= xpToNext;
+        level++;
+      }
+      else {
+        break;
+      }
+    }
+    while (true) {
+      int xpToNext = 7 * level - 148;
+      if (xp > xpToNext) {
+        xp -= xpToNext;
+        level++;
+      }
+      else {
+        break;
+      }
+    }
+
+    player.setLevel(level);
+    player.setExp(xp);
+    return;
   }
 }
