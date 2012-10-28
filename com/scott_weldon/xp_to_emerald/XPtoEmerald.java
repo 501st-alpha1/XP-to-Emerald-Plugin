@@ -1,5 +1,6 @@
 package com.scott_weldon.xp_to_emerald;
 
+import java.util.logging.Level;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -34,13 +35,13 @@ public final class XPtoEmerald extends JavaPlugin {
         expToUse -= expToUse % SCALE;
         int exp = getTotalXP(player);
         if (expToUse > exp) {
-          sender.sendMessage("You only have " + exp + " XP!");
+          player.sendMessage("You only have " + exp + " XP!");
           return true;
         }
-        sender.sendMessage("You previously had " + exp + " XP!");
+        player.sendMessage("You previously had " + exp + " XP!");
         setTotalXP(player, exp - expToUse);
-        sender.sendMessage("You should have " + (exp - expToUse) + " XP.");
-        sender.sendMessage("You actually have " + getTotalXP(player) + " XP.");
+        player.sendMessage("You should have " + (exp - expToUse) + " XP.");
+        player.sendMessage("You actually have " + getTotalXP(player) + " XP.");
         inventory.addItem(new ItemStack(Material.EMERALD, emeralds));
 
         return true;
@@ -85,6 +86,7 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
+      getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
     }
     while (level < 30) {
       int xpToNext = 3 * level - 28;
@@ -95,6 +97,7 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
+      getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
     }
     while (true) {
       int xpToNext = 7 * level - 148;
@@ -105,6 +108,7 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
+      getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
     }
 
     player.setLevel(level);
