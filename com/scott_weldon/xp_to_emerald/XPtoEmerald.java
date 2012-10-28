@@ -89,7 +89,7 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
     }
-    while (level < 30) {
+    while ((level >= 15) || (level < 30)) {
       int xpToNext = 3 * level - 28;
       if (xp > xpToNext) {
         xp -= xpToNext;
@@ -100,7 +100,7 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
     }
-    while (true) {
+    while (level >= 30) {
       int xpToNext = 7 * level - 148;
       if (xp > xpToNext) {
         xp -= xpToNext;
