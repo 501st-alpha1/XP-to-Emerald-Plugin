@@ -113,6 +113,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
 
     player.setLevel(level);
+    player.setExp(0);
     player.setExp(xp);
     return;
   }
