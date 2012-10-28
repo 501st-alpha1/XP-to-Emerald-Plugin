@@ -77,6 +77,7 @@ public final class XPtoEmerald extends JavaPlugin {
   public void setTotalXP(Player player, int xp) {
     int level = 0;
 
+    getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
     while (level < 15) {
       int xpToNext = 17;
       if (xp > xpToNext) {
