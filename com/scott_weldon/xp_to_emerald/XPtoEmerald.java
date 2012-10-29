@@ -1,6 +1,5 @@
 package com.scott_weldon.xp_to_emerald;
 
-import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -36,7 +35,6 @@ public final class XPtoEmerald extends JavaPlugin {
         int xp;
 
         if (args.length == 2) {
-          getLogger().log(Level.INFO, "2 args");
           if (!sender.hasPermission("xptemerald.admin")
               && !sender.hasPermission("xptoemerald.*")) {
             sender.sendMessage("You don't have permission for that!");
@@ -56,7 +54,6 @@ public final class XPtoEmerald extends JavaPlugin {
           xp = Integer.parseInt(args[1]);
         }
         else if (args.length == 1) {
-          getLogger().log(Level.INFO, "1 arg");
           player = (Player) sender;
           xp = Integer.parseInt(args[0]);
           if (!player.hasPermission("xptoemerald.convert")
@@ -100,7 +97,6 @@ public final class XPtoEmerald extends JavaPlugin {
         int emeralds;
 
         if (args.length == 2) {
-          getLogger().log(Level.INFO, "2 args");
           if (!sender.hasPermission("xptemerald.admin")
               && !sender.hasPermission("xptoemerald.*")) {
             sender.sendMessage("You don't have permission for that!");
@@ -120,7 +116,6 @@ public final class XPtoEmerald extends JavaPlugin {
           emeralds = Integer.parseInt(args[1]);
         }
         else if (args.length == 1) {
-          getLogger().log(Level.INFO, "1 arg");
           player = (Player) sender;
           emeralds = Integer.parseInt(args[0]);
           if (!player.hasPermission("xptoemerald.convert")
