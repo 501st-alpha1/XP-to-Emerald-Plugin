@@ -68,7 +68,14 @@ public final class XPtoEmerald extends JavaPlugin {
 
         int emeralds = Integer.parseInt(args[0]);
         int emeraldId = Material.EMERALD.getId();
-        int numOfEmeralds = inventory.getItem(emeraldId).getAmount();
+
+        int numOfEmeralds = 0;
+        for (ItemStack item : inventory) {
+          if (item.getType() == Material.EMERALD) {
+            numOfEmeralds += item.getAmount();
+          }
+        }
+        inventory.remove(emeraldId);
 
         if (numOfEmeralds < emeralds) {
           player.sendMessage("You only have " + numOfEmeralds + " emeralds!");
@@ -76,7 +83,6 @@ public final class XPtoEmerald extends JavaPlugin {
 
         int exp = emeralds * SCALE;
         setTotalXP(player, exp);
-        inventory.remove(emeraldId);
         inventory.addItem(new ItemStack(Material.EMERALD, numOfEmeralds
             - emeralds));
 
