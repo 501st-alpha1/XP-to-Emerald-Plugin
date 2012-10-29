@@ -72,51 +72,26 @@ public final class XPtoEmerald extends JavaPlugin {
 
     totalXP += currentXP;
 
-    return totalXP;
+    return currentXP;
   }
 
   public void setTotalXP(Player player, int xp) {
-    int level = 0;
-
-    getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
-    while (level < 15) {
-      int xpToNext = 17;
-      if (xp > xpToNext) {
-        xp -= xpToNext;
-        level++;
-      }
-      else {
-        break;
-      }
-      getLogger().log(Level.INFO,
-          "Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext);
-    }
-    while ((level >= 15) || (level < 30)) {
-      int xpToNext = 3 * level - 28;
-      if (xp > xpToNext) {
-        xp -= xpToNext;
-        level++;
-      }
-      else {
-        break;
-      }
-      getLogger().log(Level.INFO,
-          "Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext);
-    }
-    while (level >= 30) {
-      int xpToNext = 7 * level - 148;
-      if (xp > xpToNext) {
-        xp -= xpToNext;
-        level++;
-      }
-      else {
-        break;
-      }
-      getLogger().log(Level.INFO,
-          "Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext);
-    }
-
-    player.setLevel(level);
+    /*
+     * int level = 0;
+     * 
+     * getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp); while
+     * (level < 15) { int xpToNext = 17; if (xp > xpToNext) { xp -= xpToNext;
+     * level++; } else { break; } getLogger().log(Level.INFO, "(1) Level: " +
+     * level + " XP: " + xp + " xpToNext: " + xpToNext); } while ((level >= 15)
+     * || (level < 30)) { int xpToNext = 3 * level - 28; if (xp > xpToNext) { xp
+     * -= xpToNext; level++; } else { break; } getLogger().log(Level.INFO,
+     * "(2) Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext); } while
+     * (level >= 30) { int xpToNext = 7 * level - 148; if (xp > xpToNext) { xp
+     * -= xpToNext; level++; } else { break; } getLogger().log(Level.INFO,
+     * "(3) Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext); }
+     * 
+     * player.setLevel(level);
+     */
     player.setTotalExperience(xp);
     return;
   }
