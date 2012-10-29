@@ -1,6 +1,6 @@
 name: XP to Emerald
 main: com.scott_weldon.xp_to_emerald.XPtoEmerald
-version: 0.0.17
+version: 0.0.18
 commands:
   xptoemerald:
     description: Convert some XP to Emeralds.

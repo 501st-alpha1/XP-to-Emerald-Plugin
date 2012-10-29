@@ -29,7 +29,9 @@ public final class XPtoEmerald extends JavaPlugin {
         Player player = (Player) sender;
         PlayerInventory inventory = player.getInventory();
 
-        if (!player.hasPermission("xptoemerald.convert")) {
+        if (!player.hasPermission("xptoemerald.convert")
+            && !player.hasPermission("xptemerald.admin")
+            && !player.hasPermission("xptoemerald.*")) {
           player.sendMessage("You don't have permission for that!");
           return true;
         }
