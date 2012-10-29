@@ -6,7 +6,10 @@ commands:
     description: Convert some XP to Emeralds.
     usage: "usage: /<command> [xp amount]"
     permissions: xptoemerald.convert
-    permission-message: Requires permission xptoemerald.convert
+  emeraldtoxp:
+    description: Convert some Emeralds to XP.
+    usage: "usage: /<command> [emerald amount]"
+    permissions: xptoemerald.convert
 permissions:
   xptoemerald.*:
     description: Give access to all XPtoEmerald commands.
