@@ -106,7 +106,7 @@ public final class XPtoEmerald extends JavaPlugin {
               + " xpToNext: " + xpToNext);
     }
 
-    float xpPct = currXP / xpToNext;
+    float xpPct = (float) (currXP * 1.0 / xpToNext);
 
     getLogger().log(Level.INFO, "xpPct: " + xpPct);
 
