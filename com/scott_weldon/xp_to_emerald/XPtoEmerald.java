@@ -71,6 +71,9 @@ public final class XPtoEmerald extends JavaPlugin {
 
         int numOfEmeralds = 0;
         for (ItemStack item : inventory) {
+          if (item == null) {
+            continue;
+          }
           if (item.getType() == Material.EMERALD) {
             numOfEmeralds += item.getAmount();
           }
