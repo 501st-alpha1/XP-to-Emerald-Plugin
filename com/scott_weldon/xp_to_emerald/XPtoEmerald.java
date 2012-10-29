@@ -33,7 +33,7 @@ public final class XPtoEmerald extends JavaPlugin {
         int expToUse = Integer.parseInt(args[0]);
         int emeralds = expToUse / SCALE;
         expToUse -= expToUse % SCALE;
-        int exp = getTotalXP(player);
+        int exp = player.getTotalExperience();
         if (expToUse > exp) {
           player.sendMessage("You only have " + exp + " XP!");
           return true;
@@ -41,47 +41,29 @@ public final class XPtoEmerald extends JavaPlugin {
         player.sendMessage("You previously had " + exp + " XP!");
         setTotalXP(player, exp - expToUse);
         player.sendMessage("You should have " + (exp - expToUse) + " XP.");
-        player.sendMessage("You actually have " + getTotalXP(player) + " XP.");
+        player.sendMessage("You actually have " + player.getTotalExperience()
+            + " XP.");
         inventory.addItem(new ItemStack(Material.EMERALD, emeralds));
 
         return true;
       }
       else {
         sender.sendMessage("This command may not be used from the console.");
-        return false;
+        return true;
       }
     }
     return false;
   }
 
-  public int getTotalXP(Player player) {
-    int level = player.getLevel();
-    int currentXP = (int) player.getTotalExperience();
-    int totalXP = 0;
-    getLogger().log(Level.INFO, "currentXP: " + currentXP);
-
-    if (level <= 15) {
-      totalXP = 17 * level;
-    }
-    else if (level <= 30) {
-      totalXP = (int) (1.5 * Math.pow(level, 2) - 29.5 * level + 360);
-    }
-    else { // Levels above 30
-      totalXP = (int) (3.5 * Math.pow(level, 2) - 151.5 * level + 2220);
-    }
-
-    totalXP += currentXP;
-
-    return currentXP;
-  }
-
   public void setTotalXP(Player player, int xp) {
     int level = 0;
     int currXP = xp;
+    int xpToNext = 17;
 
-    // getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
+    getLogger().log(Level.INFO,
+        "Level: " + level + " XP: " + xp + " currXP: " + currXP);
     while (level < 15) {
-      int xpToNext = 17;
+      xpToNext = 17;
       if (currXP > xpToNext) {
         currXP -= xpToNext;
         level++;
@@ -89,11 +71,13 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
-      // getLogger().log(Level.INFO,
-      // "(1) Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext);
+      getLogger().log(
+          Level.INFO,
+          "(1) Level: " + level + " XP: " + xp + " currXP: " + currXP
+              + " xpToNext: " + xpToNext);
     }
     while ((level >= 15) || (level < 30)) {
-      int xpToNext = 3 * level - 28;
+      xpToNext = 3 * level - 28;
       if (currXP > xpToNext) {
         currXP -= xpToNext;
         level++;
@@ -101,11 +85,13 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
-      // getLogger().log(Level.INFO,
-      // "(2) Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext);
+      getLogger().log(
+          Level.INFO,
+          "(2) Level: " + level + " XP: " + xp + " currXP: " + currXP
+              + " xpToNext: " + xpToNext);
     }
     while (level >= 30) {
-      int xpToNext = 7 * level - 148;
+      xpToNext = 7 * level - 148;
       if (currXP > xpToNext) {
         currXP -= xpToNext;
         level++;
@@ -113,12 +99,16 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
-      // getLogger().log(Level.INFO,
-      // "(3) Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext);
+      getLogger().log(
+          Level.INFO,
+          "(3) Level: " + level + " XP: " + xp + " currXP: " + currXP
+              + " xpToNext: " + xpToNext);
     }
 
+    float xpPct = currXP / xpToNext;
+
     player.setLevel(level);
-    player.setExp(currXP);
+    player.setExp(xpPct);
     player.setTotalExperience(xp);
     return;
   }
