@@ -87,7 +87,8 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
-      getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
+      getLogger().log(Level.INFO,
+          "Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext);
     }
     while ((level >= 15) || (level < 30)) {
       int xpToNext = 3 * level - 28;
@@ -98,7 +99,8 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
-      getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
+      getLogger().log(Level.INFO,
+          "Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext);
     }
     while (level >= 30) {
       int xpToNext = 7 * level - 148;
@@ -109,7 +111,8 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
-      getLogger().log(Level.INFO, "Level: " + level + " XP: " + xp);
+      getLogger().log(Level.INFO,
+          "Level: " + level + " XP: " + xp + " xpToNext: " + xpToNext);
     }
 
     player.setLevel(level);
