@@ -84,7 +84,7 @@ public final class XPtoEmerald extends JavaPlugin {
           player.sendMessage("You only have " + numOfEmeralds + " emeralds!");
         }
 
-        int exp = emeralds * SCALE;
+        int exp = player.getTotalExperience() + (emeralds * SCALE);
         setTotalXP(player, exp);
         inventory.addItem(new ItemStack(Material.EMERALD, numOfEmeralds
             - emeralds));
