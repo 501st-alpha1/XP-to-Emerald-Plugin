@@ -60,10 +60,11 @@ public final class XPtoEmerald extends JavaPlugin {
     int currXP = xp;
     int xpToNext = 17;
 
-    getLogger().log(Level.INFO,
-        "Level: " + level + " XP: " + xp + " currXP: " + currXP);
+    getLogger().log(
+        Level.INFO,
+        "Level: " + level + " XP: " + xp + " currXP: " + currXP + " xpToNext: "
+            + xpToNext);
     while (level < 15) {
-      xpToNext = 17;
       if (currXP > xpToNext) {
         currXP -= xpToNext;
         level++;
@@ -76,7 +77,7 @@ public final class XPtoEmerald extends JavaPlugin {
           "(1) Level: " + level + " XP: " + xp + " currXP: " + currXP
               + " xpToNext: " + xpToNext);
     }
-    while ((level >= 15) || (level < 30)) {
+    while ((level >= 15) && (level < 30)) {
       xpToNext = 3 * level - 28;
       if (currXP > xpToNext) {
         currXP -= xpToNext;
@@ -106,6 +107,8 @@ public final class XPtoEmerald extends JavaPlugin {
     }
 
     float xpPct = currXP / xpToNext;
+
+    getLogger().log(Level.INFO, "xpPct: " + xpPct);
 
     player.setLevel(level);
     player.setExp(xpPct);
