@@ -31,16 +31,30 @@ public final class XPtoEmerald extends JavaPlugin {
     }
     if (cmd.getName().equalsIgnoreCase("xptoemerald")) {
       if (sender instanceof Player) {
-        Player player = (Player) sender;
+        Player player;
+        int xp;
 
-        if (!player.hasPermission("xptoemerald.convert")
-            && !player.hasPermission("xptemerald.admin")
-            && !player.hasPermission("xptoemerald.*")) {
-          player.sendMessage("You don't have permission for that!");
-          return true;
+        if (args.length == 2) {
+          if (!sender.hasPermission("xptemerald.admin")
+              && !sender.hasPermission("xptoemerald.*")) {
+            sender.sendMessage("You don't have permission for that!");
+            return true;
+          }
+          player = server.getPlayer(args[0]);
+          xp = Integer.parseInt(args[1]);
         }
-
-        int xp = Integer.parseInt(args[0]);
+        else if (args.length == 1) {
+          player = (Player) sender;
+          xp = Integer.parseInt(args[0]);
+          if (!player.hasPermission("xptoemerald.convert")
+              && !player.hasPermission("xptemerald.admin")
+              && !player.hasPermission("xptoemerald.*")) {
+            player.sendMessage("You don't have permission for that!");
+            return true;
+          }
+        }
+        else
+          return false;
 
         return xpToEmerald(player, xp);
       }
@@ -58,39 +72,65 @@ public final class XPtoEmerald extends JavaPlugin {
 
         int xp = Integer.parseInt(args[1]);
 
-        return xpToEmerald(player, xp);
+        if (xpToEmerald(player, xp)) {
+          sender.sendMessage("Converted " + xp + " of player " + player
+              + "'s xp to Emeralds.");
+          return true;
+        }
+        else
+          return false;
       }
     }
     if (cmd.getName().equalsIgnoreCase("emeraldtoxp")) {
       if (sender instanceof Player) {
-        Player player = (Player) sender;
+        Player player;
+        int emeralds;
 
-        if (!player.hasPermission("xptoemerald.convert")
-            && !player.hasPermission("xptemerald.admin")
-            && !player.hasPermission("xptoemerald.*")) {
-          player.sendMessage("You don't have permission for that!");
-          return true;
+        if (args.length == 2) {
+          if (!sender.hasPermission("xptemerald.admin")
+              && !sender.hasPermission("xptoemerald.*")) {
+            sender.sendMessage("You don't have permission for that!");
+            return true;
+          }
+          player = server.getPlayer(args[0]);
+          emeralds = Integer.parseInt(args[1]);
         }
-
-        int emeralds = Integer.parseInt(args[0]);
+        else if (args.length == 1) {
+          player = (Player) sender;
+          emeralds = Integer.parseInt(args[0]);
+          if (!player.hasPermission("xptoemerald.convert")
+              && !player.hasPermission("xptemerald.admin")
+              && !player.hasPermission("xptoemerald.*")) {
+            player.sendMessage("You don't have permission for that!");
+            return true;
+          }
+        }
+        else
+          return false;
 
         return emeraldToXP(player, emeralds);
       }
-      else {
-        Player player = server.getPlayer(args[0]);
+      else
+        return false;
+    }
+    else {
+      Player player = server.getPlayer(args[0]);
 
-        if (player == null) {
-          sender.sendMessage("Player " + args[0] + " does not exist!");
-          return false;
-        }
-        if (!player.isOnline()) {
-          sender.sendMessage("Player " + args[0] + " is not online!");
-          return true;
-        }
+      if (player == null) {
+        sender.sendMessage("Player " + args[0] + " does not exist!");
+        return false;
+      }
+      if (!player.isOnline()) {
+        sender.sendMessage("Player " + args[0] + " is not online!");
+        return true;
+      }
 
-        int emeralds = Integer.parseInt(args[1]);
+      int emeralds = Integer.parseInt(args[1]);
 
-        return emeraldToXP(player, emeralds);
+      if (emeraldToXP(player, emeralds)) {
+        sender.sendMessage("Converted " + emeralds + " of player " + player
+            + "'s Emeralds to xp.");
+        return true;
       }
     }
     return false;
