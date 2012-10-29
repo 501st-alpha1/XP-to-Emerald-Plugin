@@ -1,6 +1,5 @@
 package com.scott_weldon.xp_to_emerald;
 
-import java.util.logging.Level;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -29,7 +28,12 @@ public final class XPtoEmerald extends JavaPlugin {
       if (sender instanceof Player) {
         Player player = (Player) sender;
         PlayerInventory inventory = player.getInventory();
-        // Permissions stuff here?
+
+        if (!player.hasPermission("xptoemerald.convert")) {
+          player.sendMessage("You don't have permission for that!");
+          return true;
+        }
+
         int expToUse = Integer.parseInt(args[0]);
         int emeralds = expToUse / SCALE;
         expToUse -= expToUse % SCALE;
@@ -38,11 +42,7 @@ public final class XPtoEmerald extends JavaPlugin {
           player.sendMessage("You only have " + exp + " XP!");
           return true;
         }
-        player.sendMessage("You previously had " + exp + " XP!");
         setTotalXP(player, exp - expToUse);
-        player.sendMessage("You should have " + (exp - expToUse) + " XP.");
-        player.sendMessage("You actually have " + player.getTotalExperience()
-            + " XP.");
         inventory.addItem(new ItemStack(Material.EMERALD, emeralds));
 
         return true;
@@ -60,10 +60,6 @@ public final class XPtoEmerald extends JavaPlugin {
     int currXP = xp;
     int xpToNext = 17;
 
-    getLogger().log(
-        Level.INFO,
-        "Level: " + level + " XP: " + xp + " currXP: " + currXP + " xpToNext: "
-            + xpToNext);
     while (level < 15) {
       if (currXP > xpToNext) {
         currXP -= xpToNext;
@@ -72,10 +68,6 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
-      getLogger().log(
-          Level.INFO,
-          "(1) Level: " + level + " XP: " + xp + " currXP: " + currXP
-              + " xpToNext: " + xpToNext);
     }
     while ((level >= 15) && (level < 30)) {
       xpToNext = 3 * level - 28;
@@ -86,10 +78,6 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
-      getLogger().log(
-          Level.INFO,
-          "(2) Level: " + level + " XP: " + xp + " currXP: " + currXP
-              + " xpToNext: " + xpToNext);
     }
     while (level >= 30) {
       xpToNext = 7 * level - 148;
@@ -100,15 +88,9 @@ public final class XPtoEmerald extends JavaPlugin {
       else {
         break;
       }
-      getLogger().log(
-          Level.INFO,
-          "(3) Level: " + level + " XP: " + xp + " currXP: " + currXP
-              + " xpToNext: " + xpToNext);
     }
 
     float xpPct = (float) (currXP * 1.0 / xpToNext);
-
-    getLogger().log(Level.INFO, "xpPct: " + xpPct);
 
     player.setLevel(level);
     player.setExp(xpPct);
