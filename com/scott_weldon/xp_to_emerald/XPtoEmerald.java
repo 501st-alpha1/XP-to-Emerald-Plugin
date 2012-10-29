@@ -54,6 +54,37 @@ public final class XPtoEmerald extends JavaPlugin {
         return true;
       }
     }
+    if (cmd.getName().equalsIgnoreCase("emeraldtoxp")) {
+      if (sender instanceof Player) {
+        Player player = (Player) sender;
+        PlayerInventory inventory = player.getInventory();
+
+        if (!player.hasPermission("xptoemerald.convert")
+            && !player.hasPermission("xptemerald.admin")
+            && !player.hasPermission("xptoemerald.*")) {
+          player.sendMessage("You don't have permission for that!");
+          return true;
+        }
+
+        int emeralds = Integer.parseInt(args[0]);
+        int numOfEmeralds = inventory.getItem(Material.EMERALD.getId())
+            .getAmount();
+
+        if (numOfEmeralds < emeralds) {
+          player.sendMessage("You only have " + numOfEmeralds + " emeralds!");
+        }
+
+        int exp = emeralds * SCALE;
+        setTotalXP(player, exp);
+        inventory.removeItem(new ItemStack(Material.EMERALD, emeralds));
+
+        return true;
+      }
+      else {
+        sender.sendMessage("This command may not be used from the console.");
+        return true;
+      }
+    }
     return false;
   }
 
