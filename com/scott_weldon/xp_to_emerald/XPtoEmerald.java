@@ -59,7 +59,7 @@ public final class XPtoEmerald extends JavaPlugin {
           player = (Player) sender;
 
           if (player.hasPermission("xptoemerald.convert")
-              || player.hasPermission("xptemerald.admin")
+              || player.hasPermission("xptoemerald.admin")
               || player.hasPermission("xptoemerald.*")) {
             xp = Integer.parseInt(args[0]);
           }
@@ -102,7 +102,7 @@ public final class XPtoEmerald extends JavaPlugin {
         int emeralds;
 
         if (args.length == 2) {
-          if (sender.hasPermission("xptemerald.admin")
+          if (sender.hasPermission("xptoemerald.admin")
               || sender.hasPermission("xptoemerald.*")) {
             player = server.getPlayer(args[0]);
 
@@ -126,7 +126,7 @@ public final class XPtoEmerald extends JavaPlugin {
           player = (Player) sender;
 
           if (player.hasPermission("xptoemerald.convert")
-              || player.hasPermission("xptemerald.admin")
+              || player.hasPermission("xptoemerald.admin")
               || player.hasPermission("xptoemerald.*")) {
             emeralds = Integer.parseInt(args[0]);
           }
