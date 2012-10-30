@@ -35,7 +35,7 @@ public final class XPtoEmerald extends JavaPlugin {
         int xp;
 
         if (args.length == 2) {
-          if (sender.hasPermission("xptemerald.admin")
+          if (sender.hasPermission("xptoemerald.admin")
               || sender.hasPermission("xptoemerald.*")) {
             player = server.getPlayer(args[0]);
 
