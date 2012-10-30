@@ -35,30 +35,35 @@ public final class XPtoEmerald extends JavaPlugin {
         int xp;
 
         if (args.length == 2) {
-          if (!sender.hasPermission("xptemerald.admin")
-              && !sender.hasPermission("xptoemerald.*")) {
+          if (sender.hasPermission("xptemerald.admin")
+              || sender.hasPermission("xptoemerald.*")) {
+            player = server.getPlayer(args[0]);
+
+            if (player == null) {
+              sender.sendMessage("Player " + args[0] + " does not exist!");
+              return false;
+            }
+            if (!player.isOnline()) {
+              sender.sendMessage("Player " + args[0] + " is not online!");
+              return true;
+            }
+
+            xp = Integer.parseInt(args[1]);
+          }
+          else {
             sender.sendMessage("You don't have permission for that!");
             return true;
           }
-          player = server.getPlayer(args[0]);
-
-          if (player == null) {
-            sender.sendMessage("Player " + args[0] + " does not exist!");
-            return false;
-          }
-          if (!player.isOnline()) {
-            sender.sendMessage("Player " + args[0] + " is not online!");
-            return true;
-          }
-
-          xp = Integer.parseInt(args[1]);
         }
         else if (args.length == 1) {
           player = (Player) sender;
-          xp = Integer.parseInt(args[0]);
-          if (!player.hasPermission("xptoemerald.convert")
-              && !player.hasPermission("xptemerald.admin")
-              && !player.hasPermission("xptoemerald.*")) {
+
+          if (player.hasPermission("xptoemerald.convert")
+              || player.hasPermission("xptemerald.admin")
+              || player.hasPermission("xptoemerald.*")) {
+            xp = Integer.parseInt(args[0]);
+          }
+          else {
             player.sendMessage("You don't have permission for that!");
             return true;
           }
@@ -97,30 +102,35 @@ public final class XPtoEmerald extends JavaPlugin {
         int emeralds;
 
         if (args.length == 2) {
-          if (!sender.hasPermission("xptemerald.admin")
-              && !sender.hasPermission("xptoemerald.*")) {
+          if (sender.hasPermission("xptemerald.admin")
+              || sender.hasPermission("xptoemerald.*")) {
+            player = server.getPlayer(args[0]);
+
+            if (player == null) {
+              sender.sendMessage("Player " + args[0] + " does not exist!");
+              return false;
+            }
+            if (!player.isOnline()) {
+              sender.sendMessage("Player " + args[0] + " is not online!");
+              return true;
+            }
+
+            emeralds = Integer.parseInt(args[1]);
+          }
+          else {
             sender.sendMessage("You don't have permission for that!");
             return true;
           }
-          player = server.getPlayer(args[0]);
-
-          if (player == null) {
-            sender.sendMessage("Player " + args[0] + " does not exist!");
-            return false;
-          }
-          if (!player.isOnline()) {
-            sender.sendMessage("Player " + args[0] + " is not online!");
-            return true;
-          }
-
-          emeralds = Integer.parseInt(args[1]);
         }
         else if (args.length == 1) {
           player = (Player) sender;
-          emeralds = Integer.parseInt(args[0]);
-          if (!player.hasPermission("xptoemerald.convert")
-              && !player.hasPermission("xptemerald.admin")
-              && !player.hasPermission("xptoemerald.*")) {
+
+          if (player.hasPermission("xptoemerald.convert")
+              || player.hasPermission("xptemerald.admin")
+              || player.hasPermission("xptoemerald.*")) {
+            emeralds = Integer.parseInt(args[0]);
+          }
+          else {
             player.sendMessage("You don't have permission for that!");
             return true;
           }
