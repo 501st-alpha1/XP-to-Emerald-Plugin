@@ -200,6 +200,7 @@ public final class XPtoEmerald extends JavaPlugin {
 
     if (numOfEmeralds < emeralds) {
       player.sendMessage("You only have " + numOfEmeralds + " emeralds!");
+      return true;
     }
 
     int exp = player.getTotalExperience() + (emeralds * SCALE);
