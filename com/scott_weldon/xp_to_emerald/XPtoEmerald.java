@@ -213,8 +213,6 @@ public final class XPtoEmerald extends JavaPlugin {
 
   public boolean xtePermCheck(CommandSender sender, Player player, int xp) {
     if (player.equals(sender)) {
-      sender.sendMessage("There is no need to include your own username."
-          + "Converting anyway.");
       if (sender.hasPermission("xptoemerald.convert")) {
         return xpToEmerald(player, xp);
       }
@@ -236,8 +234,6 @@ public final class XPtoEmerald extends JavaPlugin {
 
   public boolean etxPermCheck(CommandSender sender, Player player, int emeralds) {
     if (player.equals(sender)) {
-      sender.sendMessage("There is no need to include your own username."
-          + "Converting anyway.");
       if (sender.hasPermission("xptoemerald.convert")) {
         return emeraldToXP(player, emeralds);
       }
