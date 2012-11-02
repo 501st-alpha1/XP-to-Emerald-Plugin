@@ -254,13 +254,21 @@ public final class XPtoEmerald extends JavaPlugin {
   }
 
   public boolean xpToEmerald(Player player, int xp) {
-    PlayerInventory inventory = player.getInventory();
+    int exp = player.getTotalExperience();
+    if (xp == 0) {
+      xp = exp;
+    }
 
+    PlayerInventory inventory = player.getInventory();
     int emeralds = xp / SCALE;
     xp -= xp % SCALE;
-    int exp = player.getTotalExperience();
+
     if (xp > exp) {
       player.sendMessage("You only have " + exp + " XP!");
+      return true;
+    }
+    else if (xp == 0) {
+      player.sendMessage("You need at least " + SCALE + " XP!");
       return true;
     }
     setTotalXP(player, exp - xp);
@@ -283,6 +291,17 @@ public final class XPtoEmerald extends JavaPlugin {
         numOfEmeralds += item.getAmount();
       }
     }
+
+    if (emeralds == 0) {
+      if (numOfEmeralds != 0) {
+        emeralds = numOfEmeralds;
+      }
+      else {
+        player.sendMessage("You don't have any emeralds!");
+        return true;
+      }
+    }
+
     inventory.remove(emeraldId);
 
     if (numOfEmeralds < emeralds) {
