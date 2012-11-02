@@ -312,8 +312,10 @@ public final class XPtoEmerald extends JavaPlugin {
 
     int exp = player.getTotalExperience() + (emeralds * SCALE);
     setTotalXP(player, exp);
-    inventory
-        .addItem(new ItemStack(Material.EMERALD, numOfEmeralds - emeralds));
+    if ((numOfEmeralds - emeralds) > 0) {
+      inventory.addItem(new ItemStack(Material.EMERALD, numOfEmeralds
+          - emeralds));
+    }
 
     return true;
   }
