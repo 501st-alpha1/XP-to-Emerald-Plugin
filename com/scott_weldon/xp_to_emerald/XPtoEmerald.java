@@ -60,7 +60,7 @@ public final class XPtoEmerald extends JavaPlugin {
             return false;
           }
           else
-            xtePermCheck(sender, player, xp);
+            return xtePermCheck(sender, player, xp);
         }
         else if (args.length == 1) {
           try {
@@ -95,8 +95,8 @@ public final class XPtoEmerald extends JavaPlugin {
           }
 
           if (xpToEmerald(player, xp)) {
-            sender.sendMessage("Converted " + xp + " of player " + player
-                + "'s xp to Emeralds.");
+            sender.sendMessage("Converted " + xp + " of player "
+                + player.getDisplayName() + "'s xp to Emeralds.");
             return true;
           }
           else
@@ -112,8 +112,8 @@ public final class XPtoEmerald extends JavaPlugin {
           }
 
           if (xpToEmerald(player, 0)) {
-            sender.sendMessage("Converted all of player " + player
-                + "'s xp to Emeralds.");
+            sender.sendMessage("Converted all of player "
+                + player.getDisplayName() + "'s xp to Emeralds.");
             return true;
           }
           else
@@ -171,8 +171,8 @@ public final class XPtoEmerald extends JavaPlugin {
           }
 
           if (emeraldToXP(player, emeralds)) {
-            sender.sendMessage("Converted " + emeralds + " of player " + player
-                + "'s Emeralds to xp.");
+            sender.sendMessage("Converted " + emeralds + " of player "
+                + player.getDisplayName() + "'s Emeralds to xp.");
             return true;
           }
           else
@@ -188,8 +188,8 @@ public final class XPtoEmerald extends JavaPlugin {
           }
 
           if (emeraldToXP(player, 0)) {
-            sender.sendMessage("Converted all of player " + player
-                + "'s Emeralds to xp.");
+            sender.sendMessage("Converted all of player "
+                + player.getDisplayName() + "'s Emeralds to xp.");
             return true;
           }
           else
