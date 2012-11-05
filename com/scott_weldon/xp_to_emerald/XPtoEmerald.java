@@ -226,6 +226,8 @@ public final class XPtoEmerald extends JavaPlugin {
         || sender instanceof ConsoleCommandSender) {
       config.set("conversion_scale", scale);
       this.saveConfig();
+      SCALE = config.getInt("conversion_scale");
+      sender.sendMessage("Scale set to " + scale);
       return true;
     }
     else {
@@ -238,6 +240,7 @@ public final class XPtoEmerald extends JavaPlugin {
     if (sender.hasPermission("xptoemerald.admin")
         || sender instanceof ConsoleCommandSender) {
       this.reloadConfig();
+      sender.sendMessage("Configuration reloaded!");
       return true;
     }
     else {
