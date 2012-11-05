@@ -240,6 +240,7 @@ public final class XPtoEmerald extends JavaPlugin {
     if (sender.hasPermission("xptoemerald.admin")
         || sender instanceof ConsoleCommandSender) {
       this.reloadConfig();
+      config = this.getConfig();
       SCALE = config.getInt("conversion_scale");
       sender.sendMessage("Configuration reloaded!");
       return true;
