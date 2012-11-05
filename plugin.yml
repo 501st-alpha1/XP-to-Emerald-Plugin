@@ -1,6 +1,6 @@
 name: XP to Emerald
 main: com.scott_weldon.xp_to_emerald.XPtoEmerald
-version: 0.2.0
+version: 0.3-dev
 commands:
   xptoemerald:
     description: Convert some XP to Emeralds.
@@ -23,4 +23,3 @@ permissions:
   xptoemerald.admin:
     description: Allow converting of other players' resources.
     default: op
-    

@@ -16,11 +16,14 @@
 
 package com.scott_weldon.xp_to_emerald;
 
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -28,16 +31,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class XPtoEmerald extends JavaPlugin {
   private Server server;
+  private FileConfiguration config;
 
-  public static final int SCALE = 20;
+  private static int SCALE;
 
   @Override
   public void onEnable() {
     server = Bukkit.getServer();
+    config = this.getConfig();
+    SCALE = config.getInt("conversion_scale");
+    getLogger().log(Level.INFO, "XP to Emerald enabled!");
   }
 
   @Override
   public void onDisable() {
+    getLogger().log(Level.INFO, "XP to Emerald disabled. Bye!");
   }
 
   public boolean onCommand(CommandSender sender, Command cmd, String label,
@@ -51,6 +59,9 @@ public final class XPtoEmerald extends JavaPlugin {
         int xp;
 
         if (args.length == 2) {
+          if (args[0].equalsIgnoreCase("setscale")) {
+            return setScale(sender, Integer.parseInt(args[1]));
+          }
           player = server.getPlayer(args[0]);
           xp = Integer.parseInt(args[1]);
 
@@ -69,6 +80,9 @@ public final class XPtoEmerald extends JavaPlugin {
             return xtePermCheck(sender, player, xp);
           }
           catch (NumberFormatException e) {
+            if (args[0].equalsIgnoreCase("reload")) {
+              return reload(sender);
+            }
             player = server.getPlayer(args[0]);
             if (!playerOnline(player)) {
               sender.sendMessage("Player " + args[0]
@@ -85,6 +99,9 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       else { // Command sent from console.
         if (args.length == 2) {
+          if (args[0].equalsIgnoreCase("setscale")) {
+            return setScale(sender, Integer.parseInt(args[1]));
+          }
           Player player = server.getPlayer(args[0]);
           int xp = Integer.parseInt(args[1]);
 
@@ -103,6 +120,10 @@ public final class XPtoEmerald extends JavaPlugin {
             return false;
         }
         else if (args.length == 1) {
+          if (args[0].equalsIgnoreCase("reload")) {
+            return reload(sender);
+          }
+
           Player player = server.getPlayer(args[0]);
 
           if (!playerOnline(player)) {
@@ -198,6 +219,31 @@ public final class XPtoEmerald extends JavaPlugin {
       }
     }
     return false;
+  }
+
+  public boolean setScale(CommandSender sender, int scale) {
+    if (sender.hasPermission("xptoemerald.admin")
+        || sender instanceof ConsoleCommandSender) {
+      config.set("conversion_scale", scale);
+      this.saveConfig();
+      return true;
+    }
+    else {
+      sender.sendMessage("You don't have permission for that!");
+      return true;
+    }
+  }
+
+  public boolean reload(CommandSender sender) {
+    if (sender.hasPermission("xptoemerald.admin")
+        || sender instanceof ConsoleCommandSender) {
+      this.reloadConfig();
+      return true;
+    }
+    else {
+      sender.sendMessage("You don't have permission for that!");
+      return true;
+    }
   }
 
   public boolean playerOnline(Player p) {
