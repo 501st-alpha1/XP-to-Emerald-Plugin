@@ -47,6 +47,8 @@ public final class XPtoEmerald extends JavaPlugin {
       getLogger().log(Level.WARNING,
           "Material found in config is not valid! Defaulting to Emeralds.");
       this.material = Material.EMERALD;
+      config.set("material", "emerald");
+      this.saveConfig();
     }
     else {
       this.material = m;
@@ -285,6 +287,8 @@ public final class XPtoEmerald extends JavaPlugin {
         getLogger().log(Level.WARNING,
             "Material found in config is not valid! Defaulting to Emeralds.");
         this.material = Material.EMERALD;
+        config.set("material", "emerald");
+        this.saveConfig();
       }
       else {
         this.material = m;
