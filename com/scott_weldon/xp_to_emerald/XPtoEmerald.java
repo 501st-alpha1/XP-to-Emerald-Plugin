@@ -255,8 +255,7 @@ public final class XPtoEmerald extends JavaPlugin {
   public boolean setMaterial(CommandSender sender, String material) {
     if (sender.hasPermission("xptoemerald.admin")
         || sender instanceof ConsoleCommandSender) {
-      Material m = Material.getMaterial(config.getString("material")
-          .toUpperCase());
+      Material m = Material.getMaterial(material.toUpperCase());
       if (m == null) {
         sender.sendMessage("That isn't a valid material!");
         return true;
