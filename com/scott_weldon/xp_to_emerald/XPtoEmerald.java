@@ -41,7 +41,7 @@ public final class XPtoEmerald extends JavaPlugin {
     server = Bukkit.getServer();
     config = this.getConfig();
     SCALE = config.getInt("conversion_scale");
-    material = Material.getMaterial(config.getString("material"));
+    material = Material.getMaterial(config.getString("material").toUpperCase());
     getLogger().log(Level.INFO, "XP to Emerald enabled!");
   }
 
@@ -244,7 +244,8 @@ public final class XPtoEmerald extends JavaPlugin {
       this.reloadConfig();
       config = this.getConfig();
       SCALE = config.getInt("conversion_scale");
-      material = Material.getMaterial(config.getString("material"));
+      material = Material.getMaterial(config.getString("material")
+          .toUpperCase());
       sender.sendMessage("Configuration reloaded!");
       return true;
     }
