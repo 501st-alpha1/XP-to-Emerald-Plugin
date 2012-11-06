@@ -406,8 +406,8 @@ public final class XPtoEmerald extends JavaPlugin {
     inventory.remove(emeraldId);
 
     if (numOfEmeralds < emeralds) {
-      player.sendMessage("You only have " + numOfEmeralds + material.toString()
-          + "s!");
+      player.sendMessage("You only have " + numOfEmeralds + " "
+          + material.toString() + "s!");
       inventory.addItem(new ItemStack(material, numOfEmeralds));
       return true;
     }
