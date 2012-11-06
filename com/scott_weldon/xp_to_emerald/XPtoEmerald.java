@@ -64,6 +64,9 @@ public final class XPtoEmerald extends JavaPlugin {
           if (args[0].equalsIgnoreCase("setscale")) {
             return setScale(sender, Integer.parseInt(args[1]));
           }
+          if (args[0].equalsIgnoreCase("setmaterial")) {
+            return setMaterial(sender, args[1]);
+          }
           player = server.getPlayer(args[0]);
           xp = Integer.parseInt(args[1]);
 
@@ -231,6 +234,29 @@ public final class XPtoEmerald extends JavaPlugin {
       SCALE = config.getInt("conversion_scale");
       sender.sendMessage("Scale set to " + scale);
       return true;
+    }
+    else {
+      sender.sendMessage("You don't have permission for that!");
+      return true;
+    }
+  }
+
+  public boolean setMaterial(CommandSender sender, String material) {
+    if (sender.hasPermission("xptoemerald.admin")
+        || sender instanceof ConsoleCommandSender) {
+      Material m = Material.getMaterial(config.getString("material")
+          .toUpperCase());
+      if (m == null) {
+        sender.sendMessage("That isn't a valid material!");
+        return true;
+      }
+      else {
+        this.material = m;
+        config.set("material", material);
+        this.saveConfig();
+        sender.sendMessage("Material set to " + this.material.toString());
+        return true;
+      }
     }
     else {
       sender.sendMessage("You don't have permission for that!");
