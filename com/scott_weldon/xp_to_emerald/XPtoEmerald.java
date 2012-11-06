@@ -34,12 +34,14 @@ public final class XPtoEmerald extends JavaPlugin {
   private FileConfiguration config;
 
   private static int SCALE;
+  private Material material;
 
   @Override
   public void onEnable() {
     server = Bukkit.getServer();
     config = this.getConfig();
     SCALE = config.getInt("conversion_scale");
+    material = Material.getMaterial(config.getString("material"));
     getLogger().log(Level.INFO, "XP to Emerald enabled!");
   }
 
@@ -242,6 +244,7 @@ public final class XPtoEmerald extends JavaPlugin {
       this.reloadConfig();
       config = this.getConfig();
       SCALE = config.getInt("conversion_scale");
+      material = Material.getMaterial(config.getString("material"));
       sender.sendMessage("Configuration reloaded!");
       return true;
     }
@@ -323,7 +326,7 @@ public final class XPtoEmerald extends JavaPlugin {
       return true;
     }
     setTotalXP(player, exp - xp);
-    inventory.addItem(new ItemStack(Material.EMERALD, emeralds));
+    inventory.addItem(new ItemStack(material, emeralds));
 
     return true;
   }
@@ -331,14 +334,14 @@ public final class XPtoEmerald extends JavaPlugin {
   public boolean emeraldToXP(Player player, int emeralds) {
     PlayerInventory inventory = player.getInventory();
 
-    int emeraldId = Material.EMERALD.getId();
+    int emeraldId = material.getId();
 
     int numOfEmeralds = 0;
     for (ItemStack item : inventory) {
       if (item == null) {
         continue;
       }
-      if (item.getType() == Material.EMERALD) {
+      if (item.getType() == material) {
         numOfEmeralds += item.getAmount();
       }
     }
@@ -348,7 +351,7 @@ public final class XPtoEmerald extends JavaPlugin {
         emeralds = numOfEmeralds;
       }
       else {
-        player.sendMessage("You don't have any emeralds!");
+        player.sendMessage("You don't have any " + material.toString() + "s!");
         return true;
       }
     }
@@ -356,16 +359,16 @@ public final class XPtoEmerald extends JavaPlugin {
     inventory.remove(emeraldId);
 
     if (numOfEmeralds < emeralds) {
-      player.sendMessage("You only have " + numOfEmeralds + " emeralds!");
-      inventory.addItem(new ItemStack(Material.EMERALD, numOfEmeralds));
+      player.sendMessage("You only have " + numOfEmeralds + material.toString()
+          + "s!");
+      inventory.addItem(new ItemStack(material, numOfEmeralds));
       return true;
     }
 
     int exp = player.getTotalExperience() + (emeralds * SCALE);
     setTotalXP(player, exp);
     if ((numOfEmeralds - emeralds) > 0) {
-      inventory.addItem(new ItemStack(Material.EMERALD, numOfEmeralds
-          - emeralds));
+      inventory.addItem(new ItemStack(material, numOfEmeralds - emeralds));
     }
 
     return true;
