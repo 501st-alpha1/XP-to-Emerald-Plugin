@@ -2,12 +2,12 @@ package com.scott_weldon.xp_to_emerald;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -23,16 +23,13 @@ public class XPtoEmeraldListener implements Listener {
 
   @EventHandler
   public void onSignPlace(SignChangeEvent e) {
-    debug.log(Level.INFO, "onSignPlace!");
     Player p = e.getPlayer();
     Block sign = e.getBlock();
     String[] lines = e.getLines();
     if (!lines[0].equalsIgnoreCase("[xptoemerald]")) {
-      debug.log(Level.INFO, "ignore this");
       return;
     }
     if (!lines[1].equalsIgnoreCase("xte") && !lines[1].equalsIgnoreCase("etx")) {
-      debug.log(Level.INFO, "bad conversion");
       p.sendMessage("Invalid conversion type! (Second line of sign.)");
       sign.breakNaturally();
       return;
@@ -41,7 +38,6 @@ public class XPtoEmeraldListener implements Listener {
       Integer.parseInt(lines[2]);
     }
     catch (NumberFormatException ex) {
-      debug.log(Level.INFO, "bad number");
       p.sendMessage("Invalid conversion amount, must be an integer. (Third line of sign.)");
       sign.breakNaturally();
       return;
@@ -50,10 +46,12 @@ public class XPtoEmeraldListener implements Listener {
 
   @EventHandler
   public void onSignInteract(PlayerInteractEvent e) {
-    debug.log(Level.INFO, "onSignInteract!");
     Block b = e.getClickedBlock();
-    if (!(b.getType() == Material.SIGN)) {
+    if (!(b instanceof Sign)) {
       debug.log(Level.INFO, "not a sign");
+      return;
+    }
+    if (!(e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
       return;
     }
     Sign signState = (Sign) b.getState();
