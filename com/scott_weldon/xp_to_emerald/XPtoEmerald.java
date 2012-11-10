@@ -40,6 +40,7 @@ public final class XPtoEmerald extends JavaPlugin {
   public void onEnable() {
     server = Bukkit.getServer();
     config = this.getConfig();
+
     SCALE = config.getInt("conversion_scale");
     Material m = Material.getMaterial(config.getString("material")
         .toUpperCase());
@@ -53,6 +54,9 @@ public final class XPtoEmerald extends JavaPlugin {
     else {
       this.material = m;
     }
+
+    server.getPluginManager().registerEvents(new XPtoEmeraldListener(), this);
+
     getLogger().log(Level.INFO, "XP to Emerald enabled!");
   }
 
@@ -354,7 +358,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
   }
 
-  public boolean xpToEmerald(Player player, int xp) {
+  private boolean xpToEmerald(Player player, int xp) {
     int exp = player.getTotalExperience();
     if (xp == 0) {
       xp = exp;
@@ -378,7 +382,7 @@ public final class XPtoEmerald extends JavaPlugin {
     return true;
   }
 
-  public boolean emeraldToXP(Player player, int emeralds) {
+  private boolean emeraldToXP(Player player, int emeralds) {
     PlayerInventory inventory = player.getInventory();
 
     int emeraldId = material.getId();
@@ -421,7 +425,7 @@ public final class XPtoEmerald extends JavaPlugin {
     return true;
   }
 
-  public void setTotalXP(Player player, int xp) {
+  private void setTotalXP(Player player, int xp) {
     int level = 0;
     int currXP = xp;
     int xpToNext = 17;
