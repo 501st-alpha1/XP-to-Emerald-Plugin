@@ -55,7 +55,7 @@ public final class XPtoEmerald extends JavaPlugin {
       this.material = m;
     }
 
-    server.getPluginManager().registerEvents(new XPtoEmeraldListener(), this);
+    new XPtoEmeraldListener(this);
 
     getLogger().log(Level.INFO, "XP to Emerald enabled!");
   }
