@@ -28,6 +28,7 @@ public class XPtoEmeraldListener implements Listener {
     }
     if (!p.hasPermission("xptoemerald.admin")) {
       p.sendMessage("You don't have permission for that!");
+      sign.breakNaturally();
       return;
     }
     if (!lines[1].equalsIgnoreCase("xte") && !lines[1].equalsIgnoreCase("etx")) {
@@ -65,10 +66,10 @@ public class XPtoEmeraldListener implements Listener {
     int amount = Integer.parseInt(lines[2]);
     if (lines[1].equalsIgnoreCase("xte")) {
       plugin.xtePermCheck(p, p, amount);
-      p.updateInventory();
     }
     else if (lines[1].equalsIgnoreCase("etx")) {
       plugin.etxPermCheck(p, p, amount);
     }
+    p.updateInventory();
   }
 }
