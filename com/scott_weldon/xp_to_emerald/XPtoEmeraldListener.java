@@ -1,6 +1,5 @@
 package com.scott_weldon.xp_to_emerald;
 
-import java.util.logging.Logger;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -13,12 +12,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class XPtoEmeraldListener implements Listener {
   private XPtoEmerald plugin;
-  private Logger debug;
 
   public XPtoEmeraldListener(XPtoEmerald plugin) {
     this.plugin = plugin;
     plugin.getServer().getPluginManager().registerEvents(this, plugin);
-    debug = plugin.getLogger();
   }
 
   @EventHandler
