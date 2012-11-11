@@ -2,6 +2,7 @@ package com.scott_weldon.xp_to_emerald;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -47,7 +48,8 @@ public class XPtoEmeraldListener implements Listener {
   @EventHandler
   public void onSignInteract(PlayerInteractEvent e) {
     Block b = e.getClickedBlock();
-    if (!(b instanceof Sign)) {
+    if ((b.getType() != Material.SIGN_POST)
+        && (b.getType() != Material.WALL_SIGN)) {
       debug.log(Level.INFO, "not a sign");
       return;
     }
