@@ -17,6 +17,7 @@ permissions:
     children:
       xptoemerald.convert: true
       xptoemerald.admin: true
+      xptoemerald.sign: true
   xptoemerald.convert:
     description: Allow converting XP to Emeralds and back via commands.
     default: true
