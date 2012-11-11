@@ -397,14 +397,12 @@ public final class XPtoEmerald extends JavaPlugin {
       }
     }
 
+    if (numOfEmeralds == 0) {
+      player.sendMessage("You don't have any " + material.toString() + "s!");
+      return true;
+    }
     if (emeralds == 0) {
-      if (numOfEmeralds != 0) {
-        emeralds = numOfEmeralds;
-      }
-      else {
-        player.sendMessage("You don't have any " + material.toString() + "s!");
-        return true;
-      }
+      emeralds = numOfEmeralds;
     }
 
     inventory.remove(emeraldId);
