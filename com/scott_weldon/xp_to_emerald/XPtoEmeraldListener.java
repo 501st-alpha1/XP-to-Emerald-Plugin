@@ -45,6 +45,7 @@ public class XPtoEmeraldListener implements Listener {
     }
   }
 
+  @SuppressWarnings("deprecation")
   @EventHandler
   public void onSignInteract(PlayerInteractEvent e) {
     Block b = e.getClickedBlock();
@@ -67,6 +68,7 @@ public class XPtoEmeraldListener implements Listener {
     if (lines[1].equalsIgnoreCase("xte")) {
       debug.log(Level.INFO, "xte");
       plugin.xtePermCheck(p, p, amount);
+      p.updateInventory();
     }
     else if (lines[1].equalsIgnoreCase("etx")) {
       debug.log(Level.INFO, "etx");
