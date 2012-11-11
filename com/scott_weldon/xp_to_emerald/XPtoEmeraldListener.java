@@ -26,6 +26,10 @@ public class XPtoEmeraldListener implements Listener {
     if (!lines[0].equalsIgnoreCase("[xptoemerald]")) {
       return;
     }
+    if (!p.hasPermission("xptoemerald.admin")) {
+      p.sendMessage("You don't have permission for that!");
+      return;
+    }
     if (!lines[1].equalsIgnoreCase("xte") && !lines[1].equalsIgnoreCase("etx")) {
       p.sendMessage("Invalid conversion type! (Second line of sign.)");
       sign.breakNaturally();
