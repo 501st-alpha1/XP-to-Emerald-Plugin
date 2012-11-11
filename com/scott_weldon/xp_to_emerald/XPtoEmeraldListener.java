@@ -50,6 +50,9 @@ public class XPtoEmeraldListener implements Listener {
   @EventHandler
   public void onSignInteract(PlayerInteractEvent e) {
     Block b = e.getClickedBlock();
+    if (b == null) {
+      return;
+    }
     if ((b.getType() != Material.SIGN_POST)
         && (b.getType() != Material.WALL_SIGN)) {
       return;
