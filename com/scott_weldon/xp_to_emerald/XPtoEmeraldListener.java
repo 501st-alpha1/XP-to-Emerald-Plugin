@@ -1,6 +1,5 @@
 package com.scott_weldon.xp_to_emerald;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -51,7 +50,6 @@ public class XPtoEmeraldListener implements Listener {
     Block b = e.getClickedBlock();
     if ((b.getType() != Material.SIGN_POST)
         && (b.getType() != Material.WALL_SIGN)) {
-      debug.log(Level.INFO, "not a sign");
       return;
     }
     if (!(e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
@@ -60,18 +58,15 @@ public class XPtoEmeraldListener implements Listener {
     Sign signState = (Sign) b.getState();
     String[] lines = signState.getLines();
     if (!lines[0].equalsIgnoreCase("[xptoemerald]")) {
-      debug.log(Level.INFO, "not my sign");
       return;
     }
     Player p = e.getPlayer();
     int amount = Integer.parseInt(lines[2]);
     if (lines[1].equalsIgnoreCase("xte")) {
-      debug.log(Level.INFO, "xte");
       plugin.xtePermCheck(p, p, amount);
       p.updateInventory();
     }
     else if (lines[1].equalsIgnoreCase("etx")) {
-      debug.log(Level.INFO, "etx");
       plugin.etxPermCheck(p, p, amount);
     }
   }
