@@ -65,10 +65,10 @@ public class XPtoEmeraldListener implements Listener {
     Player p = e.getPlayer();
     int amount = Integer.parseInt(lines[2]);
     if (lines[1].equalsIgnoreCase("xte")) {
-      plugin.xtePermCheck(p, p, amount);
+      plugin.xtePermCheck(p, p, amount, XPtoEmerald.SIGN);
     }
     else if (lines[1].equalsIgnoreCase("etx")) {
-      plugin.etxPermCheck(p, p, amount);
+      plugin.etxPermCheck(p, p, amount, XPtoEmerald.SIGN);
     }
     p.updateInventory();
   }

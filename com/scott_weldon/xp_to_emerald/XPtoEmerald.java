@@ -36,6 +36,9 @@ public final class XPtoEmerald extends JavaPlugin {
   private static int SCALE;
   private Material material;
 
+  protected static final int COMMAND = 0;
+  protected static final int SIGN = 1;
+
   @Override
   public void onEnable() {
     server = Bukkit.getServer();
@@ -79,25 +82,27 @@ public final class XPtoEmerald extends JavaPlugin {
           if (args[0].equalsIgnoreCase("setscale")) {
             return setScale(sender, Integer.parseInt(args[1]));
           }
-          if (args[0].equalsIgnoreCase("setmaterial")) {
+          else if (args[0].equalsIgnoreCase("setmaterial")) {
             return setMaterial(sender, args[1]);
           }
-          player = server.getPlayer(args[0]);
-          xp = Integer.parseInt(args[1]);
+          else {
+            player = server.getPlayer(args[0]);
+            xp = Integer.parseInt(args[1]);
 
-          if (!playerOnline(player)) {
-            sender.sendMessage("Player " + args[0]
-                + " does not exist or is not online.");
-            return false;
+            if (!playerOnline(player)) {
+              sender.sendMessage("Player " + args[0]
+                  + " does not exist or is not online.");
+              return false;
+            }
+            else
+              return xtePermCheck(sender, player, xp, COMMAND);
           }
-          else
-            return xtePermCheck(sender, player, xp);
         }
         else if (args.length == 1) {
           try {
             xp = Integer.parseInt(args[0]);
             player = (Player) sender;
-            return xtePermCheck(sender, player, xp);
+            return xtePermCheck(sender, player, xp, COMMAND);
           }
           catch (NumberFormatException e) {
             if (args[0].equalsIgnoreCase("reload")) {
@@ -109,12 +114,12 @@ public final class XPtoEmerald extends JavaPlugin {
                   + " does not exist or is not online.");
               return false;
             }
-            return xtePermCheck(sender, player, 0);
+            return xtePermCheck(sender, player, 0, COMMAND);
           }
         }
         else if (args.length == 0) {
           player = (Player) sender;
-          return xtePermCheck(sender, player, 0);
+          return xtePermCheck(sender, player, 0, COMMAND);
         }
       }
       else { // Command sent from console.
@@ -177,13 +182,13 @@ public final class XPtoEmerald extends JavaPlugin {
             return false;
           }
 
-          etxPermCheck(sender, player, emeralds);
+          etxPermCheck(sender, player, emeralds, COMMAND);
         }
         else if (args.length == 1) {
           try {
             emeralds = Integer.parseInt(args[0]);
             player = (Player) sender;
-            return etxPermCheck(sender, player, emeralds);
+            return etxPermCheck(sender, player, emeralds, COMMAND);
           }
           catch (NumberFormatException e) {
             player = server.getPlayer(args[0]);
@@ -192,12 +197,12 @@ public final class XPtoEmerald extends JavaPlugin {
                   + " does not exist or is not online.");
               return false;
             }
-            return etxPermCheck(sender, player, 0);
+            return etxPermCheck(sender, player, 0, COMMAND);
           }
         }
         else {
           player = (Player) sender;
-          return etxPermCheck(sender, player, 0);
+          return etxPermCheck(sender, player, 0, COMMAND);
         }
       }
       else { // Command sent from console.
@@ -316,13 +321,30 @@ public final class XPtoEmerald extends JavaPlugin {
       return true;
   }
 
-  public boolean xtePermCheck(CommandSender sender, Player player, int xp) {
+  public boolean xtePermCheck(CommandSender sender, Player player, int xp,
+      int src) {
     if (player.equals(sender)) {
-      if (sender.hasPermission("xptoemerald.convert")) {
-        return xpToEmerald(player, xp);
+      if (src == COMMAND) {
+        if (sender.hasPermission("xptoemerald.convert")) {
+          return xpToEmerald(player, xp);
+        }
+        else {
+          sender.sendMessage("You don't have permission for that!");
+          return true;
+        }
+      }
+      else if (src == SIGN) {
+        if (sender.hasPermission("xptoemerald.sign")) {
+          return xpToEmerald(player, xp);
+        }
+        else {
+          sender.sendMessage("You don't have permission for that!");
+          return true;
+        }
       }
       else {
-        sender.sendMessage("You don't have permission for that!");
+        sender.sendMessage("Something went wrong. Invalid argument src (coder"
+            + "error).");
         return true;
       }
     }
@@ -337,13 +359,30 @@ public final class XPtoEmerald extends JavaPlugin {
     }
   }
 
-  public boolean etxPermCheck(CommandSender sender, Player player, int emeralds) {
+  public boolean etxPermCheck(CommandSender sender, Player player,
+      int emeralds, int src) {
     if (player.equals(sender)) {
-      if (sender.hasPermission("xptoemerald.convert")) {
-        return emeraldToXP(player, emeralds);
+      if (src == COMMAND) {
+        if (sender.hasPermission("xptoemerald.convert")) {
+          return emeraldToXP(player, emeralds);
+        }
+        else {
+          sender.sendMessage("You don't have permission for that!");
+          return true;
+        }
+      }
+      else if (src == SIGN) {
+        if (sender.hasPermission("xptoemerald.sign")) {
+          return emeraldToXP(player, emeralds);
+        }
+        else {
+          sender.sendMessage("You don't have permission for that!");
+          return true;
+        }
       }
       else {
-        sender.sendMessage("You don't have permission for that!");
+        sender.sendMessage("Something went wrong. Invalid argument src (coder"
+            + "error).");
         return true;
       }
     }
