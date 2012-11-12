@@ -355,6 +355,7 @@ public final class XPtoEmerald extends JavaPlugin {
       this.material = m;
 
       for (String fullPath : configKeys) {
+        getLogger().log(Level.INFO, fullPath);
         String[] splitPath = fullPath.split(".");
         if (splitPath.length < 2) {
           continue;
