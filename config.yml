@@ -1,2 +1,5 @@
 conversion_scale: 20
 material: emerald
+demo_world:
+  conversion_scale: 20
+  material: emerald

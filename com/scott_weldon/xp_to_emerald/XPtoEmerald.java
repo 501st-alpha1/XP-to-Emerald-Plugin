@@ -16,10 +16,13 @@
 
 package com.scott_weldon.xp_to_emerald;
 
+import java.util.HashMap;
+import java.util.Set;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -33,18 +36,25 @@ public final class XPtoEmerald extends JavaPlugin {
   private Server server;
   private FileConfiguration config;
 
-  private static int SCALE;
+  private int scale;
   private Material material;
+  private HashMap<String, Integer> worldScales;
+  private HashMap<String, Material> worldMaterials;
 
   protected static final int COMMAND = 0;
   protected static final int SIGN = 1;
+
+  private static final String SCALE = "conversion_scale";
+  private static final String MATERIAL = "material";
+  private static final String SET_SCALE = "setscale";
+  private static final String SET_MATERIAL = "setmaterial";
 
   @Override
   public void onEnable() {
     server = Bukkit.getServer();
     config = this.getConfig();
 
-    SCALE = config.getInt("conversion_scale");
+    this.scale = config.getInt("conversion_scale");
     Material m = Material.getMaterial(config.getString("material")
         .toUpperCase());
     if (m == null) {
@@ -57,6 +67,9 @@ public final class XPtoEmerald extends JavaPlugin {
     else {
       this.material = m;
     }
+
+    worldScales = new HashMap<String, Integer>();
+    worldMaterials = new HashMap<String, Material>();
 
     new XPtoEmeraldListener(this);
 
@@ -78,11 +91,22 @@ public final class XPtoEmerald extends JavaPlugin {
         Player player;
         int xp;
 
-        if (args.length == 2) {
-          if (args[0].equalsIgnoreCase("setscale")) {
+        if (args.length == 3) {
+          if (args[0].equalsIgnoreCase(SET_SCALE)) {
+            return setScale(sender, Integer.parseInt(args[1]), args[2]);
+          }
+          else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
+            return setMaterial(sender, args[1], args[2]);
+          }
+          else {
+            return false;
+          }
+        }
+        else if (args.length == 2) {
+          if (args[0].equalsIgnoreCase(SET_SCALE)) {
             return setScale(sender, Integer.parseInt(args[1]));
           }
-          else if (args[0].equalsIgnoreCase("setmaterial")) {
+          else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
             return setMaterial(sender, args[1]);
           }
           else {
@@ -123,26 +147,42 @@ public final class XPtoEmerald extends JavaPlugin {
         }
       }
       else { // Command sent from console.
-        if (args.length == 2) {
-          if (args[0].equalsIgnoreCase("setscale")) {
+        if (args.length == 3) {
+          if (args[0].equalsIgnoreCase(SET_SCALE)) {
+            return setScale(sender, Integer.parseInt(args[1]), args[2]);
+          }
+          else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
+            return setMaterial(sender, args[1], args[2]);
+          }
+          else {
+            return false;
+          }
+        }
+        else if (args.length == 2) {
+          if (args[0].equalsIgnoreCase(SET_SCALE)) {
             return setScale(sender, Integer.parseInt(args[1]));
           }
-          Player player = server.getPlayer(args[0]);
-          int xp = Integer.parseInt(args[1]);
-
-          if (!playerOnline(player)) {
-            sender.sendMessage("Player " + args[0]
-                + " does not exist or is not online.");
-            return false;
+          else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
+            return setMaterial(sender, args[1]);
           }
+          else {
+            Player player = server.getPlayer(args[0]);
+            int xp = Integer.parseInt(args[1]);
 
-          if (xpToEmerald(player, xp)) {
-            sender.sendMessage("Converted " + xp + " of player "
-                + player.getDisplayName() + "'s xp to Emeralds.");
-            return true;
+            if (!playerOnline(player)) {
+              sender.sendMessage("Player " + args[0]
+                  + " does not exist or is not online.");
+              return false;
+            }
+
+            if (xpToEmerald(player, xp)) {
+              sender.sendMessage("Converted " + xp + " of player "
+                  + player.getDisplayName() + "'s xp to Emeralds.");
+              return true;
+            }
+            else
+              return false;
           }
-          else
-            return false;
         }
         else if (args.length == 1) {
           if (args[0].equalsIgnoreCase("reload")) {
@@ -247,12 +287,24 @@ public final class XPtoEmerald extends JavaPlugin {
   }
 
   public boolean setScale(CommandSender sender, int scale) {
+    return setScale(sender, scale, null);
+  }
+
+  public boolean setScale(CommandSender sender, int scale, String world) {
     if (sender.hasPermission("xptoemerald.admin")
         || sender instanceof ConsoleCommandSender) {
-      config.set("conversion_scale", scale);
+      if (world == null) {
+        this.config.set(SCALE, scale);
+        this.scale = scale;
+      }
+      else {
+        this.config.set(world + ".conversion_scale", scale);
+        this.worldScales.put(world, scale);
+      }
       this.saveConfig();
-      SCALE = config.getInt("conversion_scale");
-      sender.sendMessage("Scale set to " + scale);
+      String worldName = (world == null) ? "all (default) worlds."
+          : ("world " + world);
+      sender.sendMessage("Scale set to " + scale + " for " + worldName);
       return true;
     }
     else {
@@ -262,6 +314,10 @@ public final class XPtoEmerald extends JavaPlugin {
   }
 
   public boolean setMaterial(CommandSender sender, String material) {
+    return setMaterial(sender, material, null);
+  }
+
+  public boolean setMaterial(CommandSender sender, String material, String world) {
     if (sender.hasPermission("xptoemerald.admin")
         || sender instanceof ConsoleCommandSender) {
       Material m = Material.getMaterial(material.toUpperCase());
@@ -270,10 +326,19 @@ public final class XPtoEmerald extends JavaPlugin {
         return true;
       }
       else {
-        this.material = m;
-        config.set("material", material);
+        if (world == null) {
+          this.config.set(MATERIAL, material);
+          this.material = m;
+        }
+        else {
+          this.config.set(world + ".material", material);
+          this.worldMaterials.put(world, m);
+        }
         this.saveConfig();
-        sender.sendMessage("Material set to " + this.material.toString());
+        String worldName = (world == null) ? "all (default) worlds."
+            : ("world " + world);
+        sender.sendMessage("Material set to " + this.material.toString()
+            + " for " + worldName);
         return true;
       }
     }
@@ -287,20 +352,53 @@ public final class XPtoEmerald extends JavaPlugin {
     if (sender.hasPermission("xptoemerald.admin")
         || sender instanceof ConsoleCommandSender) {
       this.reloadConfig();
-      config = this.getConfig();
-      SCALE = config.getInt("conversion_scale");
-      Material m = Material.getMaterial(config.getString("material")
+      this.config = this.getConfig();
+      Set<String> configKeys = this.config.getKeys(true);
+
+      this.scale = config.getInt(SCALE);
+      Material m = Material.getMaterial(config.getString(MATERIAL)
           .toUpperCase());
       if (m == null) {
         getLogger().log(Level.WARNING,
             "Material found in config is not valid! Defaulting to Emeralds.");
-        this.material = Material.EMERALD;
-        config.set("material", "emerald");
-        this.saveConfig();
+        m = Material.EMERALD;
+        this.config.set(MATERIAL, "emerald");
       }
-      else {
-        this.material = m;
+      this.material = m;
+
+      for (String fullPath : configKeys) {
+        String[] splitPath = fullPath.split(".");
+        if (splitPath.length == 1) {
+          continue;
+        }
+        else {
+          if (splitPath[1] == SCALE) {
+            int scale = this.config.getInt(fullPath);
+            this.worldScales.put(splitPath[0], scale);
+          }
+          else if (splitPath[1] == MATERIAL) {
+            String material = this.config.getString(fullPath);
+            Material mat = Material.getMaterial(material.toUpperCase());
+            if (mat == null) {
+              getLogger().log(
+                  Level.WARNING,
+                  "Material found in config for world " + splitPath[0]
+                      + " is not valid! Defaulting to Emeralds.");
+              mat = Material.EMERALD;
+              this.config.set(fullPath, mat);
+            }
+            this.worldMaterials.put(splitPath[0], mat);
+          }
+          else {
+            getLogger().log(
+                Level.WARNING,
+                "Invalid config key " + splitPath[1] + " for world "
+                    + splitPath[0] + ". Skipping.");
+          }
+        }
       }
+
+      this.saveConfig();
       sender.sendMessage("Configuration reloaded!");
       return true;
     }
@@ -398,21 +496,24 @@ public final class XPtoEmerald extends JavaPlugin {
   }
 
   private boolean xpToEmerald(Player player, int xp) {
+    World world = player.getLocation().getWorld();
+    int scale = (worldScales.containsKey(world.getName())) ? worldScales
+        .get(world.getName()) : this.scale;
     int exp = player.getTotalExperience();
     if (xp == 0) {
       xp = exp;
     }
 
     PlayerInventory inventory = player.getInventory();
-    int emeralds = xp / SCALE;
-    xp -= xp % SCALE;
+    int emeralds = xp / scale;
+    xp -= xp % scale;
 
     if (xp > exp) {
       player.sendMessage("You only have " + exp + " XP!");
       return true;
     }
     else if (xp == 0) {
-      player.sendMessage("You need at least " + SCALE + " XP!");
+      player.sendMessage("You need at least " + scale + " XP!");
       return true;
     }
     setTotalXP(player, exp - xp);
@@ -422,6 +523,9 @@ public final class XPtoEmerald extends JavaPlugin {
   }
 
   private boolean emeraldToXP(Player player, int emeralds) {
+    World world = player.getLocation().getWorld();
+    int scale = (worldScales.containsKey(world.getName())) ? worldScales
+        .get(world.getName()) : this.scale;
     PlayerInventory inventory = player.getInventory();
 
     int emeraldId = material.getId();
@@ -453,7 +557,7 @@ public final class XPtoEmerald extends JavaPlugin {
       return true;
     }
 
-    int exp = player.getTotalExperience() + (emeralds * SCALE);
+    int exp = player.getTotalExperience() + (emeralds * scale);
     setTotalXP(player, exp);
     if ((numOfEmeralds - emeralds) > 0) {
       inventory.addItem(new ItemStack(material, numOfEmeralds - emeralds));
