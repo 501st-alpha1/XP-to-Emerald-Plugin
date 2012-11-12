@@ -291,7 +291,7 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       this.saveConfig();
       String worldName = (world == null) ? "all (default) worlds."
-          : ("world " + world);
+          : ("world \"" + world + "\"");
       sender.sendMessage("Scale set to " + scale + " for " + worldName);
       return true;
     }
@@ -324,7 +324,7 @@ public final class XPtoEmerald extends JavaPlugin {
         }
         this.saveConfig();
         String worldName = (world == null) ? "all (default) worlds."
-            : ("world " + world);
+            : ("world \"" + world + "\"");
         sender.sendMessage("Material set to " + m.toString() + " for "
             + worldName);
         return true;
@@ -355,7 +355,6 @@ public final class XPtoEmerald extends JavaPlugin {
       this.material = m;
 
       for (String fullPath : configKeys) {
-        getLogger().log(Level.INFO, fullPath);
         String[] splitPath = fullPath.split("\\.");
         if (splitPath.length < 2) {
           continue;
