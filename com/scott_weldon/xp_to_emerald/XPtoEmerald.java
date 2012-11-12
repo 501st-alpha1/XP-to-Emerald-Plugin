@@ -71,7 +71,7 @@ public final class XPtoEmerald extends JavaPlugin {
 
   public boolean onCommand(CommandSender sender, Command cmd, String label,
       String[] args) {
-    if (args.length > 2) {
+    if (args.length > 3) {
       return false;
     }
     if (cmd.getName().equalsIgnoreCase("xptoemerald")) {
