@@ -488,6 +488,8 @@ public final class XPtoEmerald extends JavaPlugin {
     World world = player.getLocation().getWorld();
     int scale = (worldScales.containsKey(world.getName())) ? worldScales
         .get(world.getName()) : this.scale;
+    Material material = (worldMaterials.containsKey(world.getName())) ? worldMaterials
+        .get(world.getName()) : this.material;
     int exp = player.getTotalExperience();
     if (xp == 0) {
       xp = exp;
@@ -515,9 +517,9 @@ public final class XPtoEmerald extends JavaPlugin {
     World world = player.getLocation().getWorld();
     int scale = (worldScales.containsKey(world.getName())) ? worldScales
         .get(world.getName()) : this.scale;
+    Material material = (worldMaterials.containsKey(world.getName())) ? worldMaterials
+        .get(world.getName()) : this.material;
     PlayerInventory inventory = player.getInventory();
-
-    int emeraldId = material.getId();
 
     int numOfEmeralds = 0;
     for (ItemStack item : inventory) {
@@ -537,7 +539,7 @@ public final class XPtoEmerald extends JavaPlugin {
       emeralds = numOfEmeralds;
     }
 
-    inventory.remove(emeraldId);
+    inventory.remove(material.getId());
 
     if (numOfEmeralds < emeralds) {
       player.sendMessage("You only have " + numOfEmeralds + " "
