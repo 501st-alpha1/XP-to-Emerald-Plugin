@@ -325,8 +325,8 @@ public final class XPtoEmerald extends JavaPlugin {
         this.saveConfig();
         String worldName = (world == null) ? "all (default) worlds."
             : ("world " + world);
-        sender.sendMessage("Material set to " + this.material.toString()
-            + " for " + worldName);
+        sender.sendMessage("Material set to " + m.toString() + " for "
+            + worldName);
         return true;
       }
     }
