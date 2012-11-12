@@ -361,11 +361,11 @@ public final class XPtoEmerald extends JavaPlugin {
           continue;
         }
         else {
-          if (splitPath[1] == SCALE) {
+          if (splitPath[1].equalsIgnoreCase(SCALE)) {
             int scale = this.config.getInt(fullPath);
             this.worldScales.put(splitPath[0], scale);
           }
-          else if (splitPath[1] == MATERIAL) {
+          else if (splitPath[1].equalsIgnoreCase(MATERIAL)) {
             String material = this.config.getString(fullPath);
             Material mat = Material.getMaterial(material.toUpperCase());
             if (mat == null) {
