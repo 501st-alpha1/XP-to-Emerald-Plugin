@@ -74,110 +74,102 @@ public final class XPtoEmerald extends JavaPlugin {
     if (args.length > 3) {
       return false;
     }
-    if (cmd.getName().equalsIgnoreCase("xptoemerald")) {
-      if (sender instanceof Player) {
-        Player player;
-        int xp;
 
-        if (args.length == 3) {
-          if (args[0].equalsIgnoreCase(SET_SCALE)) {
-            return setScale(sender, Integer.parseInt(args[1]), args[2]);
-          }
-          else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
-            return setMaterial(sender, args[1], args[2]);
-          }
-          else {
-            return false;
-          }
-        }
-        else if (args.length == 2) {
-          if (args[0].equalsIgnoreCase(SET_SCALE)) {
-            return setScale(sender, Integer.parseInt(args[1]));
-          }
-          else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
-            return setMaterial(sender, args[1]);
-          }
-          else {
-            player = server.getPlayer(args[0]);
-            xp = Integer.parseInt(args[1]);
+    if (cmd.getName().equalsIgnoreCase("xptoemerald")
+        || cmd.getName().equalsIgnoreCase("xp2em")) {
+      return xteCommand(sender, args);
+    }
+    else if (cmd.getName().equalsIgnoreCase("emeraldtoxp")
+        || cmd.getName().equalsIgnoreCase("em2xp")) {
+      return etxCommand(sender, args);
+    }
+    else {
+      return false;
+    }
+  }
 
-            if (!playerOnline(player)) {
-              sender.sendMessage("Player " + args[0]
-                  + " does not exist or is not online.");
-              return false;
-            }
-            else
-              return xtePermCheck(sender, player, xp, COMMAND);
-          }
+  public boolean xteCommand(CommandSender sender, String[] args) {
+    if (sender instanceof Player) {
+      Player player;
+      int xp;
+
+      if (args.length == 3) {
+        if (args[0].equalsIgnoreCase(SET_SCALE)) {
+          return setScale(sender, Integer.parseInt(args[1]), args[2]);
         }
-        else if (args.length == 1) {
-          try {
-            xp = Integer.parseInt(args[0]);
-            player = (Player) sender;
-            return xtePermCheck(sender, player, xp, COMMAND);
-          }
-          catch (NumberFormatException e) {
-            if (args[0].equalsIgnoreCase("reload")) {
-              return reload(sender);
-            }
-            player = server.getPlayer(args[0]);
-            if (!playerOnline(player)) {
-              sender.sendMessage("Player " + args[0]
-                  + " does not exist or is not online.");
-              return false;
-            }
-            return xtePermCheck(sender, player, 0, COMMAND);
-          }
+        else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
+          return setMaterial(sender, args[1], args[2]);
         }
-        else if (args.length == 0) {
-          player = (Player) sender;
-          return xtePermCheck(sender, player, 0, COMMAND);
+        else {
+          return false;
         }
       }
-      else { // Command sent from console.
-        if (args.length == 3) {
-          if (args[0].equalsIgnoreCase(SET_SCALE)) {
-            return setScale(sender, Integer.parseInt(args[1]), args[2]);
-          }
-          else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
-            return setMaterial(sender, args[1], args[2]);
-          }
-          else {
+      else if (args.length == 2) {
+        if (args[0].equalsIgnoreCase(SET_SCALE)) {
+          return setScale(sender, Integer.parseInt(args[1]));
+        }
+        else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
+          return setMaterial(sender, args[1]);
+        }
+        else {
+          player = server.getPlayer(args[0]);
+          xp = Integer.parseInt(args[1]);
+
+          if (!playerOnline(player)) {
+            sender.sendMessage("Player " + args[0]
+                + " does not exist or is not online.");
             return false;
           }
+          else
+            return xtePermCheck(sender, player, xp, COMMAND);
         }
-        else if (args.length == 2) {
-          if (args[0].equalsIgnoreCase(SET_SCALE)) {
-            return setScale(sender, Integer.parseInt(args[1]));
-          }
-          else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
-            return setMaterial(sender, args[1]);
-          }
-          else {
-            Player player = server.getPlayer(args[0]);
-            int xp = Integer.parseInt(args[1]);
-
-            if (!playerOnline(player)) {
-              sender.sendMessage("Player " + args[0]
-                  + " does not exist or is not online.");
-              return false;
-            }
-
-            if (xpToEmerald(player, xp)) {
-              sender.sendMessage("Converted " + xp + " of player "
-                  + player.getDisplayName() + "'s xp to Emeralds.");
-              return true;
-            }
-            else
-              return false;
-          }
+      }
+      else if (args.length == 1) {
+        try {
+          xp = Integer.parseInt(args[0]);
+          player = (Player) sender;
+          return xtePermCheck(sender, player, xp, COMMAND);
         }
-        else if (args.length == 1) {
+        catch (NumberFormatException e) {
           if (args[0].equalsIgnoreCase("reload")) {
             return reload(sender);
           }
-
+          player = server.getPlayer(args[0]);
+          if (!playerOnline(player)) {
+            sender.sendMessage("Player " + args[0]
+                + " does not exist or is not online.");
+            return false;
+          }
+          return xtePermCheck(sender, player, 0, COMMAND);
+        }
+      }
+      else if (args.length == 0) {
+        player = (Player) sender;
+        return xtePermCheck(sender, player, 0, COMMAND);
+      }
+    }
+    else { // Command sent from console.
+      if (args.length == 3) {
+        if (args[0].equalsIgnoreCase(SET_SCALE)) {
+          return setScale(sender, Integer.parseInt(args[1]), args[2]);
+        }
+        else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
+          return setMaterial(sender, args[1], args[2]);
+        }
+        else {
+          return false;
+        }
+      }
+      else if (args.length == 2) {
+        if (args[0].equalsIgnoreCase(SET_SCALE)) {
+          return setScale(sender, Integer.parseInt(args[1]));
+        }
+        else if (args[0].equalsIgnoreCase(SET_MATERIAL)) {
+          return setMaterial(sender, args[1]);
+        }
+        else {
           Player player = server.getPlayer(args[0]);
+          int xp = Integer.parseInt(args[1]);
 
           if (!playerOnline(player)) {
             sender.sendMessage("Player " + args[0]
@@ -185,8 +177,8 @@ public final class XPtoEmerald extends JavaPlugin {
             return false;
           }
 
-          if (xpToEmerald(player, 0)) {
-            sender.sendMessage("Converted all of player "
+          if (xpToEmerald(player, xp)) {
+            sender.sendMessage("Converted " + xp + " of player "
                 + player.getDisplayName() + "'s xp to Emeralds.");
             return true;
           }
@@ -194,81 +186,105 @@ public final class XPtoEmerald extends JavaPlugin {
             return false;
         }
       }
+      else if (args.length == 1) {
+        if (args[0].equalsIgnoreCase("reload")) {
+          return reload(sender);
+        }
+
+        Player player = server.getPlayer(args[0]);
+
+        if (!playerOnline(player)) {
+          sender.sendMessage("Player " + args[0]
+              + " does not exist or is not online.");
+          return false;
+        }
+
+        if (xpToEmerald(player, 0)) {
+          sender.sendMessage("Converted all of player "
+              + player.getDisplayName() + "'s xp to Emeralds.");
+          return true;
+        }
+        else
+          return false;
+      }
     }
-    if (cmd.getName().equalsIgnoreCase("emeraldtoxp")) {
-      if (sender instanceof Player) {
-        Player player;
-        int emeralds;
 
-        if (args.length == 2) {
+    return false;
+  }
+
+  public boolean etxCommand(CommandSender sender, String[] args) {
+    if (sender instanceof Player) {
+      Player player;
+      int emeralds;
+
+      if (args.length == 2) {
+        player = server.getPlayer(args[0]);
+        emeralds = Integer.parseInt(args[1]);
+
+        if (!playerOnline(player)) {
+          sender.sendMessage("Player " + args[0]
+              + " does not exist or is not online.");
+          return false;
+        }
+
+        etxPermCheck(sender, player, emeralds, COMMAND);
+      }
+      else if (args.length == 1) {
+        try {
+          emeralds = Integer.parseInt(args[0]);
+          player = (Player) sender;
+          return etxPermCheck(sender, player, emeralds, COMMAND);
+        }
+        catch (NumberFormatException e) {
           player = server.getPlayer(args[0]);
-          emeralds = Integer.parseInt(args[1]);
-
           if (!playerOnline(player)) {
             sender.sendMessage("Player " + args[0]
                 + " does not exist or is not online.");
             return false;
           }
-
-          etxPermCheck(sender, player, emeralds, COMMAND);
-        }
-        else if (args.length == 1) {
-          try {
-            emeralds = Integer.parseInt(args[0]);
-            player = (Player) sender;
-            return etxPermCheck(sender, player, emeralds, COMMAND);
-          }
-          catch (NumberFormatException e) {
-            player = server.getPlayer(args[0]);
-            if (!playerOnline(player)) {
-              sender.sendMessage("Player " + args[0]
-                  + " does not exist or is not online.");
-              return false;
-            }
-            return etxPermCheck(sender, player, 0, COMMAND);
-          }
-        }
-        else {
-          player = (Player) sender;
           return etxPermCheck(sender, player, 0, COMMAND);
         }
       }
-      else { // Command sent from console.
-        if (args.length == 2) {
-          Player player = server.getPlayer(args[0]);
-          int emeralds = Integer.parseInt(args[1]);
+      else {
+        player = (Player) sender;
+        return etxPermCheck(sender, player, 0, COMMAND);
+      }
+    }
+    else { // Command sent from console.
+      if (args.length == 2) {
+        Player player = server.getPlayer(args[0]);
+        int emeralds = Integer.parseInt(args[1]);
 
-          if (!playerOnline(player)) {
-            sender.sendMessage("Player " + args[0]
-                + " does not exist or is not online.");
-            return false;
-          }
-
-          if (emeraldToXP(player, emeralds)) {
-            sender.sendMessage("Converted " + emeralds + " of player "
-                + player.getDisplayName() + "'s Emeralds to xp.");
-            return true;
-          }
-          else
-            return false;
+        if (!playerOnline(player)) {
+          sender.sendMessage("Player " + args[0]
+              + " does not exist or is not online.");
+          return false;
         }
-        else if (args.length == 1) {
-          Player player = server.getPlayer(args[0]);
 
-          if (!playerOnline(player)) {
-            sender.sendMessage("Player " + args[0]
-                + " does not exist or is not online.");
-            return false;
-          }
-
-          if (emeraldToXP(player, 0)) {
-            sender.sendMessage("Converted all of player "
-                + player.getDisplayName() + "'s Emeralds to xp.");
-            return true;
-          }
-          else
-            return false;
+        if (emeraldToXP(player, emeralds)) {
+          sender.sendMessage("Converted " + emeralds + " of player "
+              + player.getDisplayName() + "'s Emeralds to xp.");
+          return true;
         }
+        else
+          return false;
+      }
+      else if (args.length == 1) {
+        Player player = server.getPlayer(args[0]);
+
+        if (!playerOnline(player)) {
+          sender.sendMessage("Player " + args[0]
+              + " does not exist or is not online.");
+          return false;
+        }
+
+        if (emeraldToXP(player, 0)) {
+          sender.sendMessage("Converted all of player "
+              + player.getDisplayName() + "'s Emeralds to xp.");
+          return true;
+        }
+        else
+          return false;
       }
     }
     return false;
@@ -577,7 +593,6 @@ public final class XPtoEmerald extends JavaPlugin {
 
     xp += (int) (xpToNext * xpPct);
 
-    player.sendMessage("You had " + xp + " XP!");
     return xp;
   }
 
