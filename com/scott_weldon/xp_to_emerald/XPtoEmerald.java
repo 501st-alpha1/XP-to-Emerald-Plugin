@@ -38,6 +38,8 @@ public final class XPtoEmerald extends JavaPlugin {
 
   private int scale;
   private Material material;
+  private String convXP;
+  private String convEm;
   private HashMap<String, Integer> worldScales;
   private HashMap<String, Material> worldMaterials;
 
@@ -48,6 +50,8 @@ public final class XPtoEmerald extends JavaPlugin {
   private static final String MATERIAL = "material";
   private static final String SET_SCALE = "setscale";
   private static final String SET_MATERIAL = "setmaterial";
+  private static final String CONV_XP = "convert_xp_using";
+  private static final String CONV_EM = "convert_emeralds_using";
 
   @Override
   public void onEnable() {
@@ -359,7 +363,9 @@ public final class XPtoEmerald extends JavaPlugin {
       this.config = this.getConfig();
       Set<String> configKeys = this.config.getKeys(true);
 
+      // Set up global options
       this.scale = config.getInt(SCALE);
+
       Material m = Material.getMaterial(config.getString(MATERIAL)
           .toUpperCase());
       if (m == null) {
@@ -370,6 +376,29 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       this.material = m;
 
+      String convXP = config.getString(CONV_XP);
+      if (!convXP.equalsIgnoreCase("emeralds")
+          && !convXP.equalsIgnoreCase("xp")) {
+        getLogger().log(Level.WARNING,
+            "Invalid value for " + CONV_XP + ". Defaulting to Emeralds.");
+        this.convXP = "Emeralds";
+      }
+      else {
+        this.convXP = convXP;
+      }
+
+      String convEm = config.getString(CONV_EM);
+      if (!convEm.equalsIgnoreCase("emeralds")
+          && !convEm.equalsIgnoreCase("target_level")) {
+        getLogger().log(Level.WARNING,
+            "Invalid value for " + CONV_EM + ". Defaulting to Emeralds.");
+        this.convEm = "Emeralds";
+      }
+      else {
+        this.convEm = convEm;
+      }
+
+      // Set up world-specific options
       for (String fullPath : configKeys) {
         String[] splitPath = fullPath.split("\\.");
         if (splitPath.length < 2) {
@@ -499,12 +528,14 @@ public final class XPtoEmerald extends JavaPlugin {
     }
   }
 
-  private boolean xpToEmerald(Player player, int xp) {
+  private boolean xpToEmerald(Player player, int amount) {
     World world = player.getLocation().getWorld();
     int scale = (worldScales.containsKey(world.getName())) ? worldScales
         .get(world.getName()) : this.scale;
     Material material = (worldMaterials.containsKey(world.getName())) ? worldMaterials
         .get(world.getName()) : this.material;
+    int xp = (this.convXP.equalsIgnoreCase("emeralds")) ? (amount * scale)
+        : amount;
     int exp = getTotalXP(player);
     if (xp == 0) {
       xp = exp;
@@ -528,13 +559,16 @@ public final class XPtoEmerald extends JavaPlugin {
     return true;
   }
 
-  private boolean emeraldToXP(Player player, int emeralds) {
+  private boolean emeraldToXP(Player player, int value) {
     World world = player.getLocation().getWorld();
     int scale = (worldScales.containsKey(world.getName())) ? worldScales
         .get(world.getName()) : this.scale;
     Material material = (worldMaterials.containsKey(world.getName())) ? worldMaterials
         .get(world.getName()) : this.material;
     PlayerInventory inventory = player.getInventory();
+
+    int emeralds = this.convEm.equalsIgnoreCase("target_level") ? (int) Math
+        .ceil(getXPatLevel(value) / scale) : value;
 
     int numOfEmeralds = 0;
     for (ItemStack item : inventory) {
@@ -572,6 +606,30 @@ public final class XPtoEmerald extends JavaPlugin {
     return true;
   }
 
+  private int getXPtoNext(int level) {
+    if (level < 16) {
+      return 17;
+    }
+    else if (level < 31) {
+      return 3 * level - 28;
+    }
+    else {
+      return 7 * level - 148;
+    }
+  }
+
+  private int getXPatLevel(int level) {
+    if (level < 16) {
+      return 17 * level;
+    }
+    else if (level < 31) {
+      return (int) (1.5 * level * level - 29.5 * level + 360);
+    }
+    else {
+      return (int) (3.5 * level * level - 151.5 * level + 2220);
+    }
+  }
+
   private int getTotalXP(Player player) {
     int xp = 0;
     int level = player.getLevel();
@@ -579,16 +637,16 @@ public final class XPtoEmerald extends JavaPlugin {
     int xpToNext;
 
     if (level < 16) {
-      xp = 17 * level;
-      xpToNext = 17;
+      xp = getXPatLevel(level);
+      xpToNext = getXPtoNext(level);
     }
     else if (level < 31) {
-      xp = (int) (1.5 * level * level - 29.5 * level + 360);
-      xpToNext = 3 * level - 28;
+      xp = getXPatLevel(level);
+      xpToNext = getXPtoNext(level);
     }
     else {
-      xp = (int) (3.5 * level * level - 151.5 * level + 2220);
-      xpToNext = 7 * level - 148;
+      xp = getXPatLevel(level);
+      xpToNext = getXPtoNext(level);
     }
 
     xp += (int) (xpToNext * xpPct);

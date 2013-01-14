@@ -12,11 +12,11 @@ commands:
     permissions: xptoemerald.convert
   xp2em:
     description: Alias of xptoemerald.
-    usage: "usage: /<command> [player] [xp amount]"
+    usage: "usage: /<command> [player] [amount]"
     permissions: xptoemerald.convert
   em2xp:
     description: Alias of emeraldtoxp.
-    usage: "usage: /<command> [player] [emerald amount]"
+    usage: "usage: /<command> [player] [amount / target]"
     permissions: xptoemerald.convert
 permissions:
   xptoemerald.*:

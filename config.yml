@@ -1,4 +1,8 @@
 conversion_scale: 20
+convert_xp_using: emeralds
+#convert_xp_using: xp
+convert_emeralds_using: emeralds
+#convert_emeralds_using: target_level
 material: emerald
 demo_world:
   conversion_scale: 20
