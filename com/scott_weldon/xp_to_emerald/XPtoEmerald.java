@@ -568,7 +568,8 @@ public final class XPtoEmerald extends JavaPlugin {
     PlayerInventory inventory = player.getInventory();
 
     int emeralds = this.convEm.equalsIgnoreCase("target_level") ? (int) Math
-        .ceil((getXPatLevel(value) - getTotalXP(player)) / scale) : value;
+        .ceil((getXPatLevel(value) - getXPatLevel(player.getLevel())) / scale)
+        : value;
 
     int numOfEmeralds = 0;
     for (ItemStack item : inventory) {
