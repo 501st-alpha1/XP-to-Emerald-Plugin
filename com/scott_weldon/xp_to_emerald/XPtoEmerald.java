@@ -427,7 +427,7 @@ public final class XPtoEmerald extends JavaPlugin {
       int src) {
     if (player.equals(sender)) {
       if (src == COMMAND) {
-        if (sender.hasPermission("xptoemerald.convert")) {
+        if (sender.hasPermission("xptoemerald.convert.xte")) {
           return xpToEmerald(player, xp);
         }
         else {
@@ -465,7 +465,7 @@ public final class XPtoEmerald extends JavaPlugin {
       int emeralds, int src) {
     if (player.equals(sender)) {
       if (src == COMMAND) {
-        if (sender.hasPermission("xptoemerald.convert")) {
+        if (sender.hasPermission("xptoemerald.convert.etx")) {
           return emeraldToXP(player, emeralds);
         }
         else {

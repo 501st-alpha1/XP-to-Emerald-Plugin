@@ -29,6 +29,15 @@ permissions:
   xptoemerald.convert:
     description: Allow converting of XP to Emeralds and back via commands.
     default: true
+    children:
+      xptoemerald.convert.xte: true
+      xptoemerald.convert.etx: true
+  xptoemerald.convert.xte:
+    description: Allow conversion of XP to Emeralds via commands.
+    default: true
+  xptoemerald.convert.etx:
+    description: Allow conversion of Emeralds to XP via commands.
+    default: true
   xptoemerald.sign:
     description: Allow conversion via signs.
     default: true
