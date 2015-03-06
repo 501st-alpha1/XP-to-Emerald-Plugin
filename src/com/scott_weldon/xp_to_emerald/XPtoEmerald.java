@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Scott Weldon
+/* Copyright (c) 2012-2015 Scott Weldon
  * 
  *  The XP to Emerald Plugin is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
