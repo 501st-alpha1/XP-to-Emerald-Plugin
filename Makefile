@@ -9,4 +9,4 @@ all: jars/XPtoEmerald-$(VER).jar
 
 jars/XPtoEmerald-$(VER).jar: $(SRCS) $(BUKKIT)
 	javac -d bin -classpath $(BUKKIT) $(SRCS)
-	jar -cf jars/XPtoEmerald-$(VER).jar $(BINS)
+	jar -cf $@ $(BINS)
