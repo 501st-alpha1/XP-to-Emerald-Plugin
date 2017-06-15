@@ -15,3 +15,12 @@ clean:
 jars/XPtoEmerald-$(VER)-%.jar: lib/bukkit-%.jar $(SRCS)
 	javac -d bin -classpath $< $(SRCS)
 	jar -cf $@ $(BINS)
+
+# FIXME: Figure out way to use Git features, e.g. submodules, to do this.
+bukkit:
+	git clone "https://hub.spigotmc.org/stash/scm/spigot/bukkit.git"
+
+bukkit-%: bukkit
+	cd bukkit; \
+	git remote update; \
+	git checkout $*
