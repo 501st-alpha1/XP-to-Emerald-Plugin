@@ -34,5 +34,5 @@ bukkit-checkout-%: bukkit
 	git remote update; \
 	git checkout $*
 
-lib/bukkit-1.7.10-R0.1-SNAPSHOT.jar: bukkit-checkout-a329bc5 bukkit-build
-	make bukkit-cp-$(@F)
+lib/bukkit-1.7.10-R0.1.jar: bukkit-checkout-a329bc5 bukkit-build
+	make bukkit-cp-snap-$(@F)
