@@ -20,6 +20,13 @@ jars/XPtoEmerald-$(VER)-%.jar: lib/bukkit-%.jar $(SRCS)
 bukkit:
 	git clone "https://hub.spigotmc.org/stash/scm/spigot/bukkit.git"
 
+bukkit-build:
+	cd bukkit; \
+	mvn package
+
+bukkit-cp-%:
+	cp bukkit/target/$* lib/
+
 bukkit-%: bukkit
 	cd bukkit; \
 	git remote update; \
