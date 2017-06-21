@@ -23,7 +23,7 @@ bukkit-build:
 	cd bukkit; \
 	mvn package
 
-bukkit-cp-%:
+bukkit-cp-%-SNAPSHOT:
 	cp bukkit/target/$* lib/
 
 bukkit-%: bukkit
