@@ -23,8 +23,11 @@ bukkit-build:
 	cd bukkit; \
 	mvn -DskipTests package
 
-bukkit-cp-%-SNAPSHOT:
+bukkit-cp-%:
 	cp bukkit/target/$* lib/
+
+bukkit-cp-snap-%:
+	cp bukkit/target/$(*:%.jar=%-SNAPSHOT.jar) lib/$*
 
 bukkit-checkout-%: bukkit
 	cd bukkit; \
