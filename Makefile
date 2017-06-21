@@ -21,7 +21,7 @@ bukkit:
 
 bukkit-build:
 	cd bukkit; \
-	mvn package
+	mvn -DskipTests package
 
 bukkit-cp-%-SNAPSHOT:
 	cp bukkit/target/$* lib/
