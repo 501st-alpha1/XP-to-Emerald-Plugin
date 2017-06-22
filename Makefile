@@ -12,7 +12,7 @@ clean:
 	rm $(JARS)
 
 jars/XPtoEmerald-$(VER)-%.jar: lib/bukkit-%.jar $(SRCS)
-	javac -d bin -classpath $< $(SRCS)
+	javac -Xlint:deprecation -d bin -classpath $< $(SRCS)
 	jar -cf $@ $(BINS)
 
 # FIXME: Figure out way to use Git features, e.g. submodules, to do this.
