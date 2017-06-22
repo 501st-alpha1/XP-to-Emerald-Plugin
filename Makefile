@@ -2,8 +2,8 @@
 
 BUKKIT_VERSIONS=1.6.2-R0.1 1.6.2-R1.0
 JARS=$(BUKKIT_VERSIONS:%=jars/XPtoEmerald-$(VER)-%.jar)
-SRCS=src/com/scott_weldon/xp_to_emerald/*.java
-BINS=bin/com/scott_weldon/xp_to_emerald/*.class
+SRCS:=$(shell find src/com/scott_weldon/xp_to_emerald/ -name '*.java')
+BINS=$(shell find bin/com/scott_weldon/xp_to_emerald/ -name '*.class')
 VER=2.0-dev
 
 all: $(JARS)
