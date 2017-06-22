@@ -1,6 +1,6 @@
 .PHONY: all clean
 
-BUKKIT_VERSIONS=1.6.2-R0.1 1.6.2-R1.0
+BUKKIT_VERSIONS=1.6.2-R0.1 1.6.2-R1.0 1.6.4-R1.0
 JARS=$(BUKKIT_VERSIONS:%=jars/XPtoEmerald-$(VER)-%.jar)
 SRCS:=$(shell find src/com/scott_weldon/xp_to_emerald/ -name '*.java')
 BINS=$(shell find bin/com/scott_weldon/xp_to_emerald/ -name '*.class')
@@ -36,3 +36,6 @@ bukkit-checkout-%: bukkit
 
 lib/bukkit-1.7.10-R0.1.jar: bukkit-checkout-a329bc5 bukkit-build
 	make bukkit-cp-snap-$(@F)
+
+lib/bukkit-1.6.4-R1.0.jar: bukkit-checkout-1a9d0e3 bukkit-build
+	make bukkit-cp-$(@F)
