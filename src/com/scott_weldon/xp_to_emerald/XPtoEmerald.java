@@ -640,18 +640,8 @@ public final class XPtoEmerald extends JavaPlugin {
     float xpPct = player.getExp();
     int xpToNext;
 
-    if (level < 16) {
-      xp = getXPatLevel(level);
-      xpToNext = getXPtoNext(level);
-    }
-    else if (level < 31) {
-      xp = getXPatLevel(level);
-      xpToNext = getXPtoNext(level);
-    }
-    else {
-      xp = getXPatLevel(level);
-      xpToNext = getXPtoNext(level);
-    }
+    xp = getXPatLevel(level);
+    xpToNext = getXPtoNext(level);
 
     xp += (int) (xpToNext * xpPct);
 
