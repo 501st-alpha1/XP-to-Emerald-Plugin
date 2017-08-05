@@ -573,7 +573,7 @@ public final class XPtoEmerald extends JavaPlugin {
     PlayerInventory inventory = bukkitPlayer.getInventory();
 
     int emeralds = this.convEm.equalsIgnoreCase("target_level") ? (int) Math
-        .ceil((getXPatLevel(value) - getXPatLevel(bukkitPlayer.getLevel())) / scale)
+        .ceil((getXPatLevel(value) - getXPatLevel(player.getLevel())) / scale)
         : value;
 
     int numOfEmeralds = 0;
