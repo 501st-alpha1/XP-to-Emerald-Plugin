@@ -529,11 +529,12 @@ public final class XPtoEmerald extends JavaPlugin {
   }
 
   private boolean xpToEmerald(Player bukkitPlayer, int amount) {
-    World world = bukkitPlayer.getLocation().getWorld();
-    int scale = (worldScales.containsKey(world.getName())) ? worldScales
-        .get(world.getName()) : this.scale;
-    Material material = (worldMaterials.containsKey(world.getName())) ? worldMaterials
-        .get(world.getName()) : this.material;
+    PlayerInterface player = new Player1_6(bukkitPlayer);
+    String worldName = player.getCurrentWorldName();
+    int scale = (worldScales.containsKey(worldName)) ? worldScales
+        .get(worldName) : this.scale;
+    Material material = (worldMaterials.containsKey(worldName)) ? worldMaterials
+        .get(worldName) : this.material;
     int xp = (this.convXP.equalsIgnoreCase("emeralds")) ? (amount * scale)
         : amount;
     int exp = getTotalXP(bukkitPlayer);
@@ -560,11 +561,12 @@ public final class XPtoEmerald extends JavaPlugin {
   }
 
   private boolean emeraldToXP(Player bukkitPlayer, int value) {
-    World world = bukkitPlayer.getLocation().getWorld();
-    int scale = (worldScales.containsKey(world.getName())) ? worldScales
-        .get(world.getName()) : this.scale;
-    Material material = (worldMaterials.containsKey(world.getName())) ? worldMaterials
-        .get(world.getName()) : this.material;
+    PlayerInterface player = new Player1_6(bukkitPlayer);
+    String worldName = player.getCurrentWorldName();
+    int scale = (worldScales.containsKey(worldName)) ? worldScales
+        .get(worldName) : this.scale;
+    Material material = (worldMaterials.containsKey(worldName)) ? worldMaterials
+        .get(worldName) : this.material;
     PlayerInventory inventory = bukkitPlayer.getInventory();
 
     int emeralds = this.convEm.equalsIgnoreCase("target_level") ? (int) Math
