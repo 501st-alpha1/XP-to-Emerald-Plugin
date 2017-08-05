@@ -34,6 +34,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.scott_weldon.xp_to_emerald.bukkit1_6.Player1_6;
 import com.scott_weldon.xp_to_emerald.common.interfaces.PlayerInterface;
+import com.scott_weldon.xp_to_emerald.common.interfaces.InventoryInterface;
 
 public final class XPtoEmerald extends JavaPlugin {
   private Server server;
@@ -570,21 +571,13 @@ public final class XPtoEmerald extends JavaPlugin {
         .get(worldName) : this.scale;
     Material material = (worldMaterials.containsKey(worldName)) ? worldMaterials
         .get(worldName) : this.material;
-    PlayerInventory inventory = bukkitPlayer.getInventory();
+    InventoryInterface inventory = player.getInventory();
 
     int emeralds = this.convEm.equalsIgnoreCase("target_level") ? (int) Math
         .ceil((getXPatLevel(value) - getXPatLevel(player.getLevel())) / scale)
         : value;
 
-    int numOfEmeralds = 0;
-    for (ItemStack item : inventory) {
-      if (item == null) {
-        continue;
-      }
-      if (item.getType() == material) {
-        numOfEmeralds += item.getAmount();
-      }
-    }
+    int numOfEmeralds = inventory.getItems(material.toString());
 
     if (numOfEmeralds == 0) {
       player.sendMessage("You don't have any " + material.toString() + "s!");
@@ -600,13 +593,10 @@ public final class XPtoEmerald extends JavaPlugin {
       return true;
     }
 
-    inventory.remove(material.getId());
+    inventory.removeItems(material.toString(), emeralds);
 
     int exp = getTotalXP(player) + (emeralds * scale);
     setTotalXP(player, exp);
-    if ((numOfEmeralds - emeralds) > 0) {
-      inventory.addItem(new ItemStack(material, numOfEmeralds - emeralds));
-    }
 
     return true;
   }
