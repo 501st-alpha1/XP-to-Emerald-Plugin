@@ -635,8 +635,9 @@ public final class XPtoEmerald extends JavaPlugin {
 
   private int getTotalXP(Player bukkitPlayer) {
     int xp = 0;
-    int level = bukkitPlayer.getLevel();
-    float xpPct = bukkitPlayer.getExp();
+    PlayerInterface player = new Player1_6(bukkitPlayer);
+    int level = player.getLevel();
+    float xpPct = player.getExp();
     int xpToNext;
 
     if (level < 16) {
