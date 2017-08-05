@@ -60,8 +60,21 @@ public class Inventory1_6 implements InventoryInterface {
   }
 
   public void removeItems(String name, int number) {
-    if (number < this.getItems(name)) {
+    Material material = Material.getMaterial(name.toUpperCase());
+    if (material == null) {
+      throw new IllegalArgumentException("Invalid material.");
+    }
+
+    int currentItems = this.getItems(name);
+    if (number < currentItems) {
       throw new IllegalArgumentException("Cannot remove more items than exist.");
     }
+
+    int itemsLeft = currentItems - number;
+
+    // To remove given number of items, remove all of type and add correct
+    // number back.
+    bukkitInventory.remove(material.getId());
+    this.addItems(material.toString(), itemsLeft);
   }
 }
