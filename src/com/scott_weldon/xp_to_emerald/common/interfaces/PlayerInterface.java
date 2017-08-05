@@ -35,7 +35,7 @@ public interface PlayerInterface {
   /**
    * Get the player's {@link Inventory}.
    */
-  public Inventory getInventory();
+  public InventoryInterface getInventory();
 
   /**
    * Get the player's current level.
