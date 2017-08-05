@@ -545,7 +545,7 @@ public final class XPtoEmerald extends JavaPlugin {
       xp = exp;
     }
 
-    PlayerInventory inventory = bukkitPlayer.getInventory();
+    InventoryInterface inventory = player.getInventory();
     int emeralds = xp / scale;
     xp -= xp % scale;
 
@@ -558,7 +558,7 @@ public final class XPtoEmerald extends JavaPlugin {
       return true;
     }
     setTotalXP(player, exp - xp);
-    inventory.addItem(new ItemStack(material, emeralds));
+    inventory.addItems(material.toString(), emeralds);
 
     return true;
   }
