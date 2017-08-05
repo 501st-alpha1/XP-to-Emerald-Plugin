@@ -94,7 +94,7 @@ public final class XPtoEmerald extends JavaPlugin {
 
   public boolean xteCommand(CommandSender sender, String[] args) {
     if (sender instanceof Player) {
-      Player player;
+      Player bukkitPlayer;
       int xp;
 
       if (args.length == 3) {
@@ -116,40 +116,40 @@ public final class XPtoEmerald extends JavaPlugin {
           return setMaterial(sender, args[1]);
         }
         else {
-          player = server.getPlayer(args[0]);
+          bukkitPlayer = server.getPlayer(args[0]);
           xp = Integer.parseInt(args[1]);
 
-          if (!playerOnline(player)) {
+          if (!playerOnline(bukkitPlayer)) {
             sender.sendMessage("Player " + args[0]
                 + " does not exist or is not online.");
             return false;
           }
           else
-            return xtePermCheck(sender, player, xp, COMMAND);
+            return xtePermCheck(sender, bukkitPlayer, xp, COMMAND);
         }
       }
       else if (args.length == 1) {
         try {
           xp = Integer.parseInt(args[0]);
-          player = (Player) sender;
-          return xtePermCheck(sender, player, xp, COMMAND);
+          bukkitPlayer = (Player) sender;
+          return xtePermCheck(sender, bukkitPlayer, xp, COMMAND);
         }
         catch (NumberFormatException e) {
           if (args[0].equalsIgnoreCase("reload")) {
             return reload(sender);
           }
-          player = server.getPlayer(args[0]);
-          if (!playerOnline(player)) {
+          bukkitPlayer = server.getPlayer(args[0]);
+          if (!playerOnline(bukkitPlayer)) {
             sender.sendMessage("Player " + args[0]
                 + " does not exist or is not online.");
             return false;
           }
-          return xtePermCheck(sender, player, 0, COMMAND);
+          return xtePermCheck(sender, bukkitPlayer, 0, COMMAND);
         }
       }
       else if (args.length == 0) {
-        player = (Player) sender;
-        return xtePermCheck(sender, player, 0, COMMAND);
+        bukkitPlayer = (Player) sender;
+        return xtePermCheck(sender, bukkitPlayer, 0, COMMAND);
       }
     }
     else { // Command sent from console.
@@ -172,18 +172,18 @@ public final class XPtoEmerald extends JavaPlugin {
           return setMaterial(sender, args[1]);
         }
         else {
-          Player player = server.getPlayer(args[0]);
+          Player bukkitPlayer = server.getPlayer(args[0]);
           int xp = Integer.parseInt(args[1]);
 
-          if (!playerOnline(player)) {
+          if (!playerOnline(bukkitPlayer)) {
             sender.sendMessage("Player " + args[0]
                 + " does not exist or is not online.");
             return false;
           }
 
-          if (xpToEmerald(player, xp)) {
+          if (xpToEmerald(bukkitPlayer, xp)) {
             sender.sendMessage("Converted " + xp + " of player "
-                + player.getDisplayName() + "'s xp to Emeralds.");
+                + bukkitPlayer.getDisplayName() + "'s xp to Emeralds.");
             return true;
           }
           else
@@ -195,17 +195,17 @@ public final class XPtoEmerald extends JavaPlugin {
           return reload(sender);
         }
 
-        Player player = server.getPlayer(args[0]);
+        Player bukkitPlayer = server.getPlayer(args[0]);
 
-        if (!playerOnline(player)) {
+        if (!playerOnline(bukkitPlayer)) {
           sender.sendMessage("Player " + args[0]
               + " does not exist or is not online.");
           return false;
         }
 
-        if (xpToEmerald(player, 0)) {
+        if (xpToEmerald(bukkitPlayer, 0)) {
           sender.sendMessage("Converted all of player "
-              + player.getDisplayName() + "'s xp to Emeralds.");
+              + bukkitPlayer.getDisplayName() + "'s xp to Emeralds.");
           return true;
         }
         else
@@ -218,73 +218,73 @@ public final class XPtoEmerald extends JavaPlugin {
 
   public boolean etxCommand(CommandSender sender, String[] args) {
     if (sender instanceof Player) {
-      Player player;
+      Player bukkitPlayer;
       int emeralds;
 
       if (args.length == 2) {
-        player = server.getPlayer(args[0]);
+        bukkitPlayer = server.getPlayer(args[0]);
         emeralds = Integer.parseInt(args[1]);
 
-        if (!playerOnline(player)) {
+        if (!playerOnline(bukkitPlayer)) {
           sender.sendMessage("Player " + args[0]
               + " does not exist or is not online.");
           return false;
         }
 
-        etxPermCheck(sender, player, emeralds, COMMAND);
+        etxPermCheck(sender, bukkitPlayer, emeralds, COMMAND);
       }
       else if (args.length == 1) {
         try {
           emeralds = Integer.parseInt(args[0]);
-          player = (Player) sender;
-          return etxPermCheck(sender, player, emeralds, COMMAND);
+          bukkitPlayer = (Player) sender;
+          return etxPermCheck(sender, bukkitPlayer, emeralds, COMMAND);
         }
         catch (NumberFormatException e) {
-          player = server.getPlayer(args[0]);
-          if (!playerOnline(player)) {
+          bukkitPlayer = server.getPlayer(args[0]);
+          if (!playerOnline(bukkitPlayer)) {
             sender.sendMessage("Player " + args[0]
                 + " does not exist or is not online.");
             return false;
           }
-          return etxPermCheck(sender, player, 0, COMMAND);
+          return etxPermCheck(sender, bukkitPlayer, 0, COMMAND);
         }
       }
       else {
-        player = (Player) sender;
-        return etxPermCheck(sender, player, 0, COMMAND);
+        bukkitPlayer = (Player) sender;
+        return etxPermCheck(sender, bukkitPlayer, 0, COMMAND);
       }
     }
     else { // Command sent from console.
       if (args.length == 2) {
-        Player player = server.getPlayer(args[0]);
+        Player bukkitPlayer = server.getPlayer(args[0]);
         int emeralds = Integer.parseInt(args[1]);
 
-        if (!playerOnline(player)) {
+        if (!playerOnline(bukkitPlayer)) {
           sender.sendMessage("Player " + args[0]
               + " does not exist or is not online.");
           return false;
         }
 
-        if (emeraldToXP(player, emeralds)) {
+        if (emeraldToXP(bukkitPlayer, emeralds)) {
           sender.sendMessage("Converted " + emeralds + " of player "
-              + player.getDisplayName() + "'s Emeralds to xp.");
+              + bukkitPlayer.getDisplayName() + "'s Emeralds to xp.");
           return true;
         }
         else
           return false;
       }
       else if (args.length == 1) {
-        Player player = server.getPlayer(args[0]);
+        Player bukkitPlayer = server.getPlayer(args[0]);
 
-        if (!playerOnline(player)) {
+        if (!playerOnline(bukkitPlayer)) {
           sender.sendMessage("Player " + args[0]
               + " does not exist or is not online.");
           return false;
         }
 
-        if (emeraldToXP(player, 0)) {
+        if (emeraldToXP(bukkitPlayer, 0)) {
           sender.sendMessage("Converted all of player "
-              + player.getDisplayName() + "'s Emeralds to xp.");
+              + bukkitPlayer.getDisplayName() + "'s Emeralds to xp.");
           return true;
         }
         else
@@ -452,12 +452,12 @@ public final class XPtoEmerald extends JavaPlugin {
       return true;
   }
 
-  public boolean xtePermCheck(CommandSender sender, Player player, int xp,
+  public boolean xtePermCheck(CommandSender sender, Player bukkitPlayer, int xp,
       int src) {
-    if (player.equals(sender)) {
+    if (bukkitPlayer.equals(sender)) {
       if (src == COMMAND) {
         if (sender.hasPermission("xptoemerald.convert.xte")) {
-          return xpToEmerald(player, xp);
+          return xpToEmerald(bukkitPlayer, xp);
         }
         else {
           sender.sendMessage("You don't have permission for that!");
@@ -466,7 +466,7 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       else if (src == SIGN) {
         if (sender.hasPermission("xptoemerald.sign")) {
-          return xpToEmerald(player, xp);
+          return xpToEmerald(bukkitPlayer, xp);
         }
         else {
           sender.sendMessage("You don't have permission for that!");
@@ -481,7 +481,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
     else {
       if (sender.hasPermission("xptoemerald.admin")) {
-        return xpToEmerald(player, xp);
+        return xpToEmerald(bukkitPlayer, xp);
       }
       else {
         sender.sendMessage("You don't have permission for that!");
@@ -490,12 +490,12 @@ public final class XPtoEmerald extends JavaPlugin {
     }
   }
 
-  public boolean etxPermCheck(CommandSender sender, Player player,
+  public boolean etxPermCheck(CommandSender sender, Player bukkitPlayer,
       int emeralds, int src) {
-    if (player.equals(sender)) {
+    if (bukkitPlayer.equals(sender)) {
       if (src == COMMAND) {
         if (sender.hasPermission("xptoemerald.convert.etx")) {
-          return emeraldToXP(player, emeralds);
+          return emeraldToXP(bukkitPlayer, emeralds);
         }
         else {
           sender.sendMessage("You don't have permission for that!");
@@ -504,7 +504,7 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       else if (src == SIGN) {
         if (sender.hasPermission("xptoemerald.sign")) {
-          return emeraldToXP(player, emeralds);
+          return emeraldToXP(bukkitPlayer, emeralds);
         }
         else {
           sender.sendMessage("You don't have permission for that!");
@@ -519,7 +519,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
     else {
       if (sender.hasPermission("xptoemerald.admin")) {
-        return emeraldToXP(player, emeralds);
+        return emeraldToXP(bukkitPlayer, emeralds);
       }
       else {
         sender.sendMessage("You don't have permission for that!");
@@ -528,47 +528,47 @@ public final class XPtoEmerald extends JavaPlugin {
     }
   }
 
-  private boolean xpToEmerald(Player player, int amount) {
-    World world = player.getLocation().getWorld();
+  private boolean xpToEmerald(Player bukkitPlayer, int amount) {
+    World world = bukkitPlayer.getLocation().getWorld();
     int scale = (worldScales.containsKey(world.getName())) ? worldScales
         .get(world.getName()) : this.scale;
     Material material = (worldMaterials.containsKey(world.getName())) ? worldMaterials
         .get(world.getName()) : this.material;
     int xp = (this.convXP.equalsIgnoreCase("emeralds")) ? (amount * scale)
         : amount;
-    int exp = getTotalXP(player);
+    int exp = getTotalXP(bukkitPlayer);
     if (xp == 0) {
       xp = exp;
     }
 
-    PlayerInventory inventory = player.getInventory();
+    PlayerInventory inventory = bukkitPlayer.getInventory();
     int emeralds = xp / scale;
     xp -= xp % scale;
 
     if (xp > exp) {
-      player.sendMessage("You only have " + exp + " XP!");
+      bukkitPlayer.sendMessage("You only have " + exp + " XP!");
       return true;
     }
     else if (xp == 0) {
-      player.sendMessage("You need at least " + scale + " XP!");
+      bukkitPlayer.sendMessage("You need at least " + scale + " XP!");
       return true;
     }
-    setTotalXP(player, exp - xp);
+    setTotalXP(bukkitPlayer, exp - xp);
     inventory.addItem(new ItemStack(material, emeralds));
 
     return true;
   }
 
-  private boolean emeraldToXP(Player player, int value) {
-    World world = player.getLocation().getWorld();
+  private boolean emeraldToXP(Player bukkitPlayer, int value) {
+    World world = bukkitPlayer.getLocation().getWorld();
     int scale = (worldScales.containsKey(world.getName())) ? worldScales
         .get(world.getName()) : this.scale;
     Material material = (worldMaterials.containsKey(world.getName())) ? worldMaterials
         .get(world.getName()) : this.material;
-    PlayerInventory inventory = player.getInventory();
+    PlayerInventory inventory = bukkitPlayer.getInventory();
 
     int emeralds = this.convEm.equalsIgnoreCase("target_level") ? (int) Math
-        .ceil((getXPatLevel(value) - getXPatLevel(player.getLevel())) / scale)
+        .ceil((getXPatLevel(value) - getXPatLevel(bukkitPlayer.getLevel())) / scale)
         : value;
 
     int numOfEmeralds = 0;
@@ -582,7 +582,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
 
     if (numOfEmeralds == 0) {
-      player.sendMessage("You don't have any " + material.toString() + "s!");
+      bukkitPlayer.sendMessage("You don't have any " + material.toString() + "s!");
       return true;
     }
     if (emeralds == 0) {
@@ -592,14 +592,14 @@ public final class XPtoEmerald extends JavaPlugin {
     inventory.remove(material.getId());
 
     if (numOfEmeralds < emeralds) {
-      player.sendMessage("You only have " + numOfEmeralds + " "
+      bukkitPlayer.sendMessage("You only have " + numOfEmeralds + " "
           + material.toString() + "s!");
       inventory.addItem(new ItemStack(material, numOfEmeralds));
       return true;
     }
 
-    int exp = getTotalXP(player) + (emeralds * scale);
-    setTotalXP(player, exp);
+    int exp = getTotalXP(bukkitPlayer) + (emeralds * scale);
+    setTotalXP(bukkitPlayer, exp);
     if ((numOfEmeralds - emeralds) > 0) {
       inventory.addItem(new ItemStack(material, numOfEmeralds - emeralds));
     }
@@ -631,10 +631,10 @@ public final class XPtoEmerald extends JavaPlugin {
     }
   }
 
-  private int getTotalXP(Player player) {
+  private int getTotalXP(Player bukkitPlayer) {
     int xp = 0;
-    int level = player.getLevel();
-    float xpPct = player.getExp();
+    int level = bukkitPlayer.getLevel();
+    float xpPct = bukkitPlayer.getExp();
     int xpToNext;
 
     if (level < 16) {
@@ -655,7 +655,7 @@ public final class XPtoEmerald extends JavaPlugin {
     return xp;
   }
 
-  private void setTotalXP(Player player, int xp) {
+  private void setTotalXP(Player bukkitPlayer, int xp) {
     int level = 0;
     int currXP = xp;
     int xpToNext = 17;
@@ -692,8 +692,8 @@ public final class XPtoEmerald extends JavaPlugin {
 
     float xpPct = (float) (currXP * 1.0 / xpToNext);
 
-    player.setLevel(level);
-    player.setExp(xpPct);
+    bukkitPlayer.setLevel(level);
+    bukkitPlayer.setExp(xpPct);
     return;
   }
 }
