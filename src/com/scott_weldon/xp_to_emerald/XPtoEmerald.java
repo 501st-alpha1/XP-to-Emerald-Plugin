@@ -550,11 +550,11 @@ public final class XPtoEmerald extends JavaPlugin {
     xp -= xp % scale;
 
     if (xp > exp) {
-      bukkitPlayer.sendMessage("You only have " + exp + " XP!");
+      player.sendMessage("You only have " + exp + " XP!");
       return true;
     }
     else if (xp == 0) {
-      bukkitPlayer.sendMessage("You need at least " + scale + " XP!");
+      player.sendMessage("You need at least " + scale + " XP!");
       return true;
     }
     setTotalXP(player, exp - xp);
@@ -587,7 +587,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
 
     if (numOfEmeralds == 0) {
-      bukkitPlayer.sendMessage("You don't have any " + material.toString() + "s!");
+      player.sendMessage("You don't have any " + material.toString() + "s!");
       return true;
     }
     if (emeralds == 0) {
@@ -597,8 +597,8 @@ public final class XPtoEmerald extends JavaPlugin {
     inventory.remove(material.getId());
 
     if (numOfEmeralds < emeralds) {
-      bukkitPlayer.sendMessage("You only have " + numOfEmeralds + " "
-          + material.toString() + "s!");
+      player.sendMessage("You only have " + numOfEmeralds + " "
+                         + material.toString() + "s!");
       inventory.addItem(new ItemStack(material, numOfEmeralds));
       return true;
     }
