@@ -16,27 +16,44 @@
 
 package com.scott_weldon.xp_to_emerald.common.interfaces;
 
-public interface Inventory {
+public interface PlayerInterface {
   /**
-   * Add the given items to the inventory.
-   *
-   * @param name    The name of the item type to add.
-   * @param number  How many items should be added.
+   * Get the name of the world the player is currently in.
    */
-  public void addItems(String name, int number);
+  public String getCurrentWorldName();
 
   /**
-   * Get all of a given item from the inventory.
-   *
-   * @param name  The name of the item type to retrieve.
+   * Get the display name for the player (for e.g. use in messages).
    */
-  public int getItems(String name);
+  public String getDisplayName();
 
   /**
-   * Remove the given items from the inventory.
-   *
-   * @param name    The name of the item type to remove.
-   * @param number  The number of items to remove.
+   * Get the percentage XP the player has towards the next level.
    */
-  public void removeItems(String name, int number);
+  public float getExp();
+
+  /**
+   * Get the player's {@link Inventory}.
+   */
+  public Inventory getInventory();
+
+  /**
+   * Get the player's current level.
+   */
+  public int getLevel();
+
+  /**
+   * Send a message to the player.
+   */
+  public void sendMessage(String message);
+
+  /**
+   * Set the percentage XP the player has towards the next level.
+   */
+  public void setExp(float exp);
+
+  /**
+   * Set the player's current level.
+   */
+  public void setLevel(int level);
 }
