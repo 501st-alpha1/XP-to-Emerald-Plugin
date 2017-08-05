@@ -685,8 +685,10 @@ public final class XPtoEmerald extends JavaPlugin {
 
     float xpPct = (float) (currXP * 1.0 / xpToNext);
 
-    bukkitPlayer.setLevel(level);
-    bukkitPlayer.setExp(xpPct);
+    PlayerInterface player = new Player1_6(bukkitPlayer);
+
+    player.setLevel(level);
+    player.setExp(xpPct);
     return;
   }
 }
