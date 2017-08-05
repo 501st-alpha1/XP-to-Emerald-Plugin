@@ -46,6 +46,10 @@ public class Player1_6 implements PlayerInterface {
     return this.bukkitPlayer.getLevel();
   }
 
+  public boolean isOnline() {
+    return this.bukkitPlayer != null && this.bukkitPlayer.isOnline();
+  }
+
   public void sendMessage(String message) {
     this.bukkitPlayer.sendMessage(message);
   }

@@ -43,6 +43,11 @@ public interface PlayerInterface {
   public int getLevel();
 
   /**
+   * Check if player is online.
+   */
+  public boolean isOnline();
+
+  /**
    * Send a message to the player.
    */
   public void sendMessage(String message);
