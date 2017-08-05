@@ -32,6 +32,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.scott_weldon.xp_to_emerald.bukkit1_6.Player1_6;
+import com.scott_weldon.xp_to_emerald.common.interfaces.PlayerInterface;
+
 public final class XPtoEmerald extends JavaPlugin {
   private Server server;
   private FileConfiguration config;
