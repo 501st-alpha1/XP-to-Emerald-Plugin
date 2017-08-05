@@ -557,7 +557,7 @@ public final class XPtoEmerald extends JavaPlugin {
       bukkitPlayer.sendMessage("You need at least " + scale + " XP!");
       return true;
     }
-    setTotalXP(bukkitPlayer, exp - xp);
+    setTotalXP(player, exp - xp);
     inventory.addItem(new ItemStack(material, emeralds));
 
     return true;
@@ -604,7 +604,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
 
     int exp = getTotalXP(bukkitPlayer) + (emeralds * scale);
-    setTotalXP(bukkitPlayer, exp);
+    setTotalXP(player, exp);
     if ((numOfEmeralds - emeralds) > 0) {
       inventory.addItem(new ItemStack(material, numOfEmeralds - emeralds));
     }
@@ -651,7 +651,7 @@ public final class XPtoEmerald extends JavaPlugin {
     return xp;
   }
 
-  private void setTotalXP(Player bukkitPlayer, int xp) {
+  private void setTotalXP(PlayerInterface player, int xp) {
     int level = 0;
     int currXP = xp;
     int xpToNext = 17;
@@ -687,8 +687,6 @@ public final class XPtoEmerald extends JavaPlugin {
     }
 
     float xpPct = (float) (currXP * 1.0 / xpToNext);
-
-    PlayerInterface player = new Player1_6(bukkitPlayer);
 
     player.setLevel(level);
     player.setExp(xpPct);
