@@ -72,9 +72,11 @@ public class Inventory1_6 implements InventoryInterface {
 
     int itemsLeft = currentItems - number;
 
-    // To remove given number of items, remove all of type and add correct
-    // number back.
-    bukkitInventory.remove(material.getId());
-    this.addItems(material.toString(), itemsLeft);
+    if (itemsLeft > 0) {
+      // To remove given number of items, remove all of type and add correct
+      // number back.
+      bukkitInventory.remove(material.getId());
+      this.addItems(material.toString(), itemsLeft);
+    }
   }
 }
