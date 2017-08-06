@@ -177,6 +177,7 @@ public final class XPtoEmerald extends JavaPlugin {
         }
         else {
           Player bukkitPlayer = server.getPlayer(args[0]);
+          PlayerInterface player = new Player1_6(bukkitPlayer);
           int xp = Integer.parseInt(args[1]);
 
           if (!playerOnline(bukkitPlayer)) {
@@ -185,7 +186,7 @@ public final class XPtoEmerald extends JavaPlugin {
             return false;
           }
 
-          if (xpToEmerald(bukkitPlayer, xp)) {
+          if (xpToEmerald(player, xp)) {
             sender.sendMessage("Converted " + xp + " of player "
                 + bukkitPlayer.getDisplayName() + "'s xp to Emeralds.");
             return true;
@@ -200,6 +201,7 @@ public final class XPtoEmerald extends JavaPlugin {
         }
 
         Player bukkitPlayer = server.getPlayer(args[0]);
+        PlayerInterface player = new Player1_6(bukkitPlayer);
 
         if (!playerOnline(bukkitPlayer)) {
           sender.sendMessage("Player " + args[0]
@@ -207,7 +209,7 @@ public final class XPtoEmerald extends JavaPlugin {
           return false;
         }
 
-        if (xpToEmerald(bukkitPlayer, 0)) {
+        if (xpToEmerald(player, 0)) {
           sender.sendMessage("Converted all of player "
               + bukkitPlayer.getDisplayName() + "'s xp to Emeralds.");
           return true;
@@ -261,6 +263,7 @@ public final class XPtoEmerald extends JavaPlugin {
     else { // Command sent from console.
       if (args.length == 2) {
         Player bukkitPlayer = server.getPlayer(args[0]);
+        PlayerInterface player = new Player1_6(bukkitPlayer);
         int emeralds = Integer.parseInt(args[1]);
 
         if (!playerOnline(bukkitPlayer)) {
@@ -269,7 +272,7 @@ public final class XPtoEmerald extends JavaPlugin {
           return false;
         }
 
-        if (emeraldToXP(bukkitPlayer, emeralds)) {
+        if (emeraldToXP(player, emeralds)) {
           sender.sendMessage("Converted " + emeralds + " of player "
               + bukkitPlayer.getDisplayName() + "'s Emeralds to xp.");
           return true;
@@ -279,6 +282,7 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       else if (args.length == 1) {
         Player bukkitPlayer = server.getPlayer(args[0]);
+        PlayerInterface player = new Player1_6(bukkitPlayer);
 
         if (!playerOnline(bukkitPlayer)) {
           sender.sendMessage("Player " + args[0]
@@ -286,7 +290,7 @@ public final class XPtoEmerald extends JavaPlugin {
           return false;
         }
 
-        if (emeraldToXP(bukkitPlayer, 0)) {
+        if (emeraldToXP(player, 0)) {
           sender.sendMessage("Converted all of player "
               + bukkitPlayer.getDisplayName() + "'s Emeralds to xp.");
           return true;
@@ -458,10 +462,11 @@ public final class XPtoEmerald extends JavaPlugin {
 
   public boolean xtePermCheck(CommandSender sender, Player bukkitPlayer, int xp,
       int src) {
+    PlayerInterface player = new Player1_6(bukkitPlayer);
     if (bukkitPlayer.equals(sender)) {
       if (src == COMMAND) {
         if (sender.hasPermission("xptoemerald.convert.xte")) {
-          return xpToEmerald(bukkitPlayer, xp);
+          return xpToEmerald(player, xp);
         }
         else {
           sender.sendMessage("You don't have permission for that!");
@@ -470,7 +475,7 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       else if (src == SIGN) {
         if (sender.hasPermission("xptoemerald.sign")) {
-          return xpToEmerald(bukkitPlayer, xp);
+          return xpToEmerald(player, xp);
         }
         else {
           sender.sendMessage("You don't have permission for that!");
@@ -485,7 +490,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
     else {
       if (sender.hasPermission("xptoemerald.admin")) {
-        return xpToEmerald(bukkitPlayer, xp);
+        return xpToEmerald(player, xp);
       }
       else {
         sender.sendMessage("You don't have permission for that!");
@@ -496,10 +501,11 @@ public final class XPtoEmerald extends JavaPlugin {
 
   public boolean etxPermCheck(CommandSender sender, Player bukkitPlayer,
       int emeralds, int src) {
+    PlayerInterface player = new Player1_6(bukkitPlayer);
     if (bukkitPlayer.equals(sender)) {
       if (src == COMMAND) {
         if (sender.hasPermission("xptoemerald.convert.etx")) {
-          return emeraldToXP(bukkitPlayer, emeralds);
+          return emeraldToXP(player, emeralds);
         }
         else {
           sender.sendMessage("You don't have permission for that!");
@@ -508,7 +514,7 @@ public final class XPtoEmerald extends JavaPlugin {
       }
       else if (src == SIGN) {
         if (sender.hasPermission("xptoemerald.sign")) {
-          return emeraldToXP(bukkitPlayer, emeralds);
+          return emeraldToXP(player, emeralds);
         }
         else {
           sender.sendMessage("You don't have permission for that!");
@@ -523,7 +529,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
     else {
       if (sender.hasPermission("xptoemerald.admin")) {
-        return emeraldToXP(bukkitPlayer, emeralds);
+        return emeraldToXP(player, emeralds);
       }
       else {
         sender.sendMessage("You don't have permission for that!");
@@ -532,8 +538,7 @@ public final class XPtoEmerald extends JavaPlugin {
     }
   }
 
-  private boolean xpToEmerald(Player bukkitPlayer, int amount) {
-    PlayerInterface player = new Player1_6(bukkitPlayer);
+  private boolean xpToEmerald(PlayerInterface player, int amount) {
     String worldName = player.getCurrentWorldName();
     int scale = (worldScales.containsKey(worldName)) ? worldScales
         .get(worldName) : this.scale;
@@ -564,8 +569,7 @@ public final class XPtoEmerald extends JavaPlugin {
     return true;
   }
 
-  private boolean emeraldToXP(Player bukkitPlayer, int value) {
-    PlayerInterface player = new Player1_6(bukkitPlayer);
+  private boolean emeraldToXP(PlayerInterface player, int value) {
     String worldName = player.getCurrentWorldName();
     int scale = (worldScales.containsKey(worldName)) ? worldScales
         .get(worldName) : this.scale;
